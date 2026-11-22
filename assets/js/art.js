@@ -6,7 +6,7 @@ import { skillById } from './data.js';
 
 const W = 120;
 const H = 90;
-const FONT = 'font-family="ui-rounded, \'SF Pro Rounded\', Nunito, system-ui, sans-serif" font-weight="800"';
+const FONT = 'font-family="ui-rounded, \'SF Pro Rounded\', Nunito, \'Noto Sans Georgian\', system-ui, sans-serif" font-weight="800"';
 
 function rand(seed) {
   let s = seed >>> 0;
@@ -205,8 +205,9 @@ const MOTIFS = {
     <path d="M18 54 C34 18 48 64 62 34 S88 16 102 36" ${S} stroke-width="1.2" stroke-dasharray="2 4" opacity=".7"/>
     <circle cx="62" cy="34" r="5.5" fill="#fff"/>
     ${arrow(30, 70, 'l', 7, 0.9)}${arrow(44, 70, 'r', 7, 0.45)}`,
-  ink: () => `
-    <text x="60" y="38" text-anchor="middle" font-size="22" fill="#FFD84D" ${FONT} letter-spacing="1" stroke="#fff" stroke-width=".6">RED</text>
+  // The word names one colour and is printed in another, in the page's language.
+  ink: (lang) => `
+    <text x="60" y="38" text-anchor="middle" font-size="${lang === 'ka' ? 17 : 22}" fill="#FFD84D" ${FONT} letter-spacing="${lang === 'ka' ? 0 : 1}" stroke="#fff" stroke-width=".6">${lang === 'ka' ? 'წითელი' : 'RED'}</text>
     <rect x="26" y="50" width="20" height="13" rx="6.5" fill="#FF5C61"/>
     <rect x="50" y="50" width="20" height="13" rx="6.5" fill="#FFD84D" stroke="#fff" stroke-width="2"/>
     <rect x="74" y="50" width="20" height="13" rx="6.5" fill="#7D9BFF"/>`,
@@ -301,9 +302,9 @@ const SCENES = {
   anagram: 'sea', outlier: 'hills', baskets: 'dunes', recall: 'hills',
 };
 
-export function gameArt(game) {
+export function gameArt(game, lang = 'en') {
   const skill = skillById[game.skill];
-  const motif = MOTIFS[game.id] ? MOTIFS[game.id]() : '';
+  const motif = MOTIFS[game.id] ? MOTIFS[game.id](lang) : '';
   return `<svg class="art" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"
     style="--base:${skill.night};--deep:${skill.deep}">
     <rect width="${W}" height="${H}" fill="var(--base)"/>

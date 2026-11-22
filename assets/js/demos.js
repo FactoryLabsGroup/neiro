@@ -2,6 +2,8 @@
 // Games/Constellation/ConstellationEngine.swift and Games/Ink/InkEngine.swift, with the same
 // staircase (Games/Engine/Staircase.swift). The sessions are shorter than in the app.
 
+import { t, inkName, currentLang } from './i18n.js';
+
 class Staircase {
   constructor({ level = 1, min = 1, max = 12, upAfter = 1, downAfter = 1 }) {
     Object.assign(this, { level, min, max, upAfter, downAfter, successes: 0, failures: 0 });
@@ -33,6 +35,7 @@ const shuffle = (arr) => {
   }
   return a;
 };
+const onLang = (fn) => document.addEventListener('neiro:lang', fn);
 
 function hud(root, max) {
   const score = root.querySelector('[data-score]');
@@ -53,16 +56,32 @@ function hud(root, max) {
   };
 }
 
-function overlay(root, html, label, onStart) {
+// The cover over a board: a start button, and after a game its result. It redraws itself in
+// the new language when the page's language changes.
+function cover(root, startKey, onStart) {
   const el = root.querySelector('[data-overlay]');
   const button = el.querySelector('[data-start]');
-  el.querySelectorAll('.result-score, .result-line').forEach((n) => n.remove());
-  if (html) button.insertAdjacentHTML('beforebegin', html);
-  button.lastChild.textContent = ` ${label}`;
-  el.classList.remove('hidden');
-  button.onclick = () => {
+  let result = null;
+  const draw = () => {
+    el.querySelectorAll('.result-score, .result-line').forEach((n) => n.remove());
+    if (result) {
+      button.insertAdjacentHTML('beforebegin', `<p class="result-score">${result.score.toLocaleString('en-US')}</p><p class="result-line">${t(result.key, result.vars)}</p>`);
+    }
+    button.querySelector('[data-label]').textContent = result ? t('demo.again') : t(startKey);
+  };
+  button.addEventListener('click', () => {
     el.classList.add('hidden');
     onStart();
+  });
+  onLang(draw);
+  draw();
+  return {
+    show(next) {
+      result = next;
+      draw();
+      el.classList.remove('hidden');
+    },
+    get open() { return !el.classList.contains('hidden'); },
   };
 }
 
@@ -83,8 +102,17 @@ export function constellationDemo(root) {
   const msg = root.querySelector('[data-msg]');
   const h = hud(root, 16);
   let state = null;
+  let line = { key: 'c.intro', vars: {} };
 
-  const say = (t) => { msg.textContent = t; };
+  const say = (key, vars = {}) => {
+    line = { key, vars };
+    msg.textContent = t(key, vars);
+  };
+  onLang(() => {
+    msg.textContent = t(line.key, line.vars);
+    [...gridEl.children].forEach((b, i) => b.setAttribute('aria-label', cellLabel(i, Number(gridEl.style.getPropertyValue('--n')) || 3)));
+  });
+  const cellLabel = (i, n) => t('c.cell', { r: Math.floor(i / n) + 1, c: (i % n) + 1 });
 
   function buildGrid(n) {
     gridEl.innerHTML = '';
@@ -93,7 +121,7 @@ export function constellationDemo(root) {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'star-cell';
-      b.setAttribute('aria-label', `Point ${Math.floor(i / n) + 1}, ${(i % n) + 1}`);
+      b.setAttribute('aria-label', cellLabel(i, n));
       b.addEventListener('click', () => tap(i, b));
       gridEl.appendChild(b);
     }
@@ -110,7 +138,7 @@ export function constellationDemo(root) {
     s.stage = 'waiting';
     gridEl.classList.add('disabled');
     gridEl.classList.remove('recall');
-    say(`Watch: ${layout.stars} stars.`);
+    say('c.watch', { n: layout.stars });
     await wait(450);
     if (s !== state) return;
     const cells = gridEl.children;
@@ -122,7 +150,7 @@ export function constellationDemo(root) {
       await wait(250);
       s.rotation += Math.random() < 0.5 ? 90 : -90;
       gridEl.style.transform = `rotate(${s.rotation}deg)`;
-      say('The sky turned. Find them as a shape.');
+      say('c.turned');
       await wait(700);
     } else {
       await wait(200);
@@ -131,7 +159,7 @@ export function constellationDemo(root) {
     s.stage = 'recall';
     gridEl.classList.remove('disabled');
     gridEl.classList.add('recall');
-    say('Now tap where they were.');
+    say('c.recall');
   }
 
   function tap(i, cell) {
@@ -144,7 +172,7 @@ export function constellationDemo(root) {
     } else {
       cell.classList.add('wrong');
       const cells = gridEl.children;
-      s.targets.forEach((t) => { if (!s.found.has(t)) cells[t].classList.add('missed'); });
+      s.targets.forEach((x) => { if (!s.found.has(x)) cells[x].classList.add('missed'); });
       finishRound(false);
     }
   }
@@ -160,7 +188,7 @@ export function constellationDemo(root) {
     }
     const step = s.stairs.record(solved);
     s.best = Math.max(s.best, s.stairs.level);
-    say(solved ? (step === 'up' ? 'All of them. One more star next time.' : 'All of them.') : 'Not quite. The rings show where they were.');
+    say(solved ? (step === 'up' ? 'c.allUp' : 'c.all') : 'c.missed');
     await wait(solved ? 1000 : 1400);
     if (s !== state) return;
     h.level(s.stairs.level, step);
@@ -170,11 +198,8 @@ export function constellationDemo(root) {
 
   function end() {
     const s = state;
-    say('Six rounds. Remember where the stars light up.');
-    overlay(root,
-      `<p class="result-score">${s.score.toLocaleString('en-US')}</p>
-       <p class="result-line">You recalled <b>${s.right} of ${ROUNDS}</b> skies and reached difficulty <b>${s.best}</b>. In the app a game runs twelve rounds.</p>`,
-      'Play again', start);
+    say('c.intro');
+    overlay.show({ score: s.score, key: 'c.result', vars: { right: s.right, best: s.best } });
   }
 
   function start() {
@@ -187,17 +212,13 @@ export function constellationDemo(root) {
 
   buildGrid(3);
   h.level(1);
-  overlay(root, '', 'Play Constellation', start);
+  say('c.intro');
+  const overlay = cover(root, 'demo.start.c', start);
 }
 
 // Ink ------------------------------------------------------------------------------------
 
-const INKS = [
-  { name: 'Red', color: '#FF5C61' },
-  { name: 'Blue', color: '#7D9BFF' },
-  { name: 'Green', color: '#3DD68C' },
-  { name: 'Yellow', color: '#FFD84D' },
-];
+const INKS = ['#FF5C61', '#7D9BFF', '#3DD68C', '#FFD84D'];
 const CONFLICT = [0.25, 0.4, 0.5, 0.6, 0.65, 0.7, 0.7, 0.75, 0.75, 0.8, 0.8, 0.85];
 
 function inkSettings(level) {
@@ -220,6 +241,25 @@ export function inkDemo(root, { onDone } = {}) {
   const msg = root.querySelector('[data-msg]');
   const h = hud(root, 12);
   let state = null;
+  let line = { key: 'i.intro', vars: {} };
+
+  const say = (key, vars = {}) => {
+    line = { key, vars };
+    msg.textContent = t(key, vars);
+  };
+  // A word on the board keeps its meaning and colour; only its language changes.
+  const showWord = (trial) => {
+    if (!trial) return;
+    // Georgian is never set in capitals; English words are, as in the app.
+    wordEl.textContent = currentLang() === 'ka' ? inkName(trial.word) : inkName(trial.word).toUpperCase();
+    wordEl.setAttribute('aria-label', t('i.word', { word: inkName(trial.word), ink: inkName(trial.ink).toLowerCase(), framed: trial.framed ? t('i.framed') : '' }));
+  };
+  onLang(() => {
+    const vars = line.key === 'i.inkWas' ? { color: inkName(line.vars.index).toLowerCase(), index: line.vars.index } : line.vars;
+    say(line.key, vars);
+    if (state && state.trial) showWord(state.trial);
+    swatchEl.querySelectorAll('.swatch').forEach((b) => b.setAttribute('aria-label', inkName(Number(b.dataset.ink))));
+  });
 
   function renderSwatches(order) {
     swatchEl.style.setProperty('--k', order.length);
@@ -228,8 +268,8 @@ export function inkDemo(root, { onDone } = {}) {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = 'swatch';
-      b.style.setProperty('--sw', INKS[idx].color);
-      b.setAttribute('aria-label', INKS[idx].name);
+      b.style.setProperty('--sw', INKS[idx]);
+      b.setAttribute('aria-label', inkName(idx));
       b.dataset.ink = idx;
       b.addEventListener('click', () => choose(idx, b));
       swatchEl.appendChild(b);
@@ -253,27 +293,26 @@ export function inkDemo(root, { onDone } = {}) {
     wordEl.classList.add('out');
     await wait(delay);
     if (s !== state || s.over) return;
-    const t = makeTrial(s.stairs.level);
-    s.trial = t;
+    const trial = makeTrial(s.stairs.level);
+    s.trial = trial;
     s.trialId = (s.trialId || 0) + 1;
     const id = s.trialId;
-    renderSwatches(t.swatches);
-    wordEl.textContent = INKS[t.word].name.toUpperCase();
-    wordEl.style.color = INKS[t.ink].color;
-    wordEl.classList.toggle('framed', t.framed);
+    renderSwatches(trial.swatches);
+    showWord(trial);
+    wordEl.style.color = INKS[trial.ink];
+    wordEl.classList.toggle('framed', trial.framed);
     wordEl.classList.remove('out');
-    wordEl.setAttribute('aria-label', `${INKS[t.word].name} printed in ${INKS[t.ink].name.toLowerCase()}${t.framed ? ', framed' : ''}`);
-    msg.textContent = t.framed ? 'Framed: tap what the word says.' : 'Tap the colour of the ink.';
-    if (t.deadline) {
+    say(trial.framed ? 'i.tapWord' : 'i.tapInk');
+    if (trial.deadline) {
       deadlineEl.classList.add('on');
       bar.style.transition = 'none';
       bar.style.transform = 'scaleX(1)';
       void bar.offsetWidth;
-      bar.style.transition = `transform ${t.deadline}s linear`;
+      bar.style.transition = `transform ${trial.deadline}s linear`;
       bar.style.transform = 'scaleX(0)';
       setTimeout(() => {
-        if (state === s && s.trialId === id && s.trial === t && !s.over) answer(null, null);
-      }, t.deadline * 1000);
+        if (state === s && s.trialId === id && s.trial === trial && !s.over) answer(null, null);
+      }, trial.deadline * 1000);
     } else {
       deadlineEl.classList.remove('on');
     }
@@ -286,20 +325,22 @@ export function inkDemo(root, { onDone } = {}) {
 
   function answer(idx, button) {
     const s = state;
-    const t = s.trial;
+    const trial = s.trial;
     s.trial = null;
-    const target = t.framed ? t.word : t.ink;
+    const target = trial.framed ? trial.word : trial.ink;
     const correct = idx === target;
     s.history.push({ level: s.stairs.level, correct });
     s.total++;
     if (correct) {
       s.right++;
-      s.score += 8 + s.stairs.level + (t.word === t.ink ? 0 : 4) + (t.framed ? 4 : 0);
+      s.score += 8 + s.stairs.level + (trial.word === trial.ink ? 0 : 4) + (trial.framed ? 4 : 0);
       h.score(s.score);
       button.classList.add('right');
     } else {
       if (button) button.classList.add('wrong');
-      msg.textContent = idx === null ? 'Too slow. A new word is coming.' : t.framed ? 'That one was framed: it asked for the word.' : `The ink was ${INKS[t.ink].name.toLowerCase()}.`;
+      if (idx === null) say('i.slow');
+      else if (trial.framed) say('i.framedMiss');
+      else say('i.inkWas', { color: inkName(trial.ink).toLowerCase(), index: trial.ink });
     }
     const step = s.stairs.record(correct);
     s.best = Math.max(s.best, s.stairs.level);
@@ -314,11 +355,8 @@ export function inkDemo(root, { onDone } = {}) {
     deadlineEl.classList.remove('on');
     wordEl.textContent = '';
     wordEl.classList.remove('framed');
-    msg.textContent = 'Thirty seconds. Framed words ask for what the word says.';
-    overlay(root,
-      `<p class="result-score">${s.score.toLocaleString('en-US')}</p>
-       <p class="result-line"><b>${s.right} of ${s.total}</b> right, and you reached difficulty <b>${s.best}</b>. Your run is drawn under How it works.</p>`,
-      'Play again', start);
+    say('i.intro');
+    overlay.show({ score: s.score, key: 'i.result', vars: { right: s.right, total: s.total, best: s.best } });
     if (onDone) onDone(s.history.slice());
   }
 
@@ -340,7 +378,8 @@ export function inkDemo(root, { onDone } = {}) {
 
   renderSwatches([0, 1, 2]);
   h.level(1);
-  overlay(root, '', 'Play Ink', start);
+  say('i.intro');
+  const overlay = cover(root, 'demo.start.i', start);
 }
 
 export { Staircase };

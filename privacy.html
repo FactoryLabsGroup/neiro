@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    (function () {
+      var d = document.documentElement, l = null, q = null, s = null;
+      try { q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+      try { s = localStorage.getItem('neiro.lang'); } catch (e) {}
+      if (q === 'en' || q === 'ka') l = q;
+      else if (s === 'en' || s === 'ka') l = s;
+      else l = (navigator.languages || [navigator.language || '']).some(function (x) { return /^ka\b/i.test(x); }) ? 'ka' : 'en';
+      d.lang = l;
+      if (l === 'ka') {
+        d.className += ' lang-pending';
+        setTimeout(function () { d.classList.remove('lang-pending'); }, 2500);
+      }
+    })();
+  </script>
+  <title data-i18n="privacy.title">Privacy policy · Neiro</title>
+  <meta name="description" data-i18n-content="privacy.desc" content="How Neiro handles your data: no account, no tracking, no ads. Your training stays on your iPhone.">
+  <meta name="theme-color" content="#0B0C0F">
+  <link rel="alternate" hreflang="en" href="privacy.html?lang=en">
+  <link rel="alternate" hreflang="ka" href="privacy.html?lang=ka">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="preload" href="assets/fonts/nunito-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+  <header class="nav" id="nav" data-on="night">
+    <div class="nav-inner container">
+      <a class="brand" href="index.html">
+        <img src="assets/img/icon-64.png" width="32" height="32" alt="">
+        <span>Neiro</span>
+      </a>
+      <a class="nav-back" href="index.html" data-i18n="privacy.back">Back to Neiro</a>
+      <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria="nav.lang">
+        <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="ka" lang="ka" aria-pressed="false">ქა</button>
+      </div>
+      <a class="nav-cta" data-appstore href="https://apps.apple.com/" aria-label="Download Neiro on the App Store" data-i18n-aria="appstore.aria">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#apple"/></svg>
+        <span data-i18n="nav.download">Download</span>
+      </a>
+    </div>
+  </header>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
+  </svg>
+
+  <main id="main">
+
+    <!-- English -->
+    <div data-lang-block="en">
+      <section class="legal-hero night" data-theme="night">
+        <div class="hero-sky" aria-hidden="true"><span class="glow glow-c"></span></div>
+        <div class="container">
+          <p class="eyebrow">Privacy</p>
+          <h1 class="display">Your training stays <em>yours.</em></h1>
+          <p class="lead">Neiro has no account, no ads, no analytics and no tracking. This page explains, in plain words, what the app keeps, where it keeps it, and the few Apple services it uses only when you choose to.</p>
+          <p class="legal-date">Last updated 22 November 2026 · For the Neiro app for iPhone and this website.</p>
+          <ul class="legal-points">
+            <li style="--c: var(--memory)"><b>No account</b><span>Nothing to sign up for. You open the app and play.</span></li>
+            <li style="--c: var(--math)"><b>No tracking</b><span>No ads, no analytics, no third party code. Nothing follows you around.</span></li>
+            <li style="--c: var(--words)"><b>On your iPhone</b><span>Your progress is stored on your phone, with a backup in your own iCloud.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="legal paper" data-theme="paper">
+        <div class="container">
+          <article>
+            <section>
+              <h2>Who we are</h2>
+              <p>Neiro is made by Factory Labs. In this policy, “we” means Factory Labs. If you have a question about privacy, write to us at <a href="mailto:contact@factorylabs.app">contact@factorylabs.app</a>.</p>
+            </section>
+            <section>
+              <h2>The short version</h2>
+              <p>We don't collect, receive, store or sell any personal data from the Neiro app. There is no Neiro account, and no server of ours that the app reports to. The app is built only from Apple's own frameworks, with no advertising, analytics or crash reporting code from anyone else.</p>
+            </section>
+            <section>
+              <h2>What stays on your iPhone</h2>
+              <p>To work, Neiro keeps these on your phone, in the app's own storage:</p>
+              <ul>
+                <li><strong>Your progress:</strong> the games you've played, your scores and best scores, the difficulty you've reached in each game, your skill scores, your level and experience, your streak and streak freezes, the days you trained, your badges, and your daily puzzle and challenge results.</li>
+                <li><strong>Your settings:</strong> language, appearance, the skills you chose to focus on, your reminder time, and whether sound and haptics are on.</li>
+                <li><strong>Your duels:</strong> the last thirty duels played on this phone, and the name you chose to send with them, if any.</li>
+              </ul>
+              <p>Neiro's widgets read a short summary of this, and a picture of your neuron, from a container on the same phone that only Neiro and its widgets can use. Deleting the app deletes all of it from your phone.</p>
+            </section>
+            <section>
+              <h2>iCloud backup</h2>
+              <p>If you're signed in to iCloud, Neiro copies your progress, compressed, to your own iCloud key value storage, so a new phone or a reinstall can pick up where you left off. The copy sits in your iCloud account, kept by Apple under Apple's privacy policy. We can't see it.</p>
+              <p>You can turn the backup off in Neiro's Settings, which removes the copy. Resetting your progress in Neiro clears it too.</p>
+            </section>
+            <section>
+              <h2>Game Center and the day's board</h2>
+              <p>The daily puzzle has a board where everyone's first solve of the day is ranked, kept by Apple's Game Center. Neiro doesn't involve Game Center until you open the puzzle, and offers to sign you in only if you're not signed in already and only when you ask.</p>
+              <p>If you join, Neiro sends Game Center one number for your first solve each day, made from the moves it took and the time. Game Center shows it to other players with your Game Center name. If you allow it, Neiro also shows how your Game Center friends did. iOS asks for your permission first, and you can change it in the Settings app.</p>
+              <p>Game Center is run by Apple under Apple's privacy policy. You can sign out of it in the Settings app.</p>
+            </section>
+            <section>
+              <h2>Duels</h2>
+              <p>A duel travels in a link that you send yourself, through any app you choose. The link holds the game, the difficulty, a number that deals the same rounds to both players, the language, each player's score and answer counts, and the names you add, if any. Anyone who has the link can read what's in it. Nothing about a duel is sent to us.</p>
+            </section>
+            <section>
+              <h2>Reminders</h2>
+              <p>Daily reminders are notifications scheduled on your iPhone itself. No server sends them. You can change their time or turn them off in Neiro, or turn off notifications in the Settings app.</p>
+            </section>
+            <section>
+              <h2>Siri and Shortcuts</h2>
+              <p>“Start today's Neiro training” works through Apple's App Intents on your phone. Neiro only receives the request to open today's training. What you say to Siri is handled by Apple under Apple's privacy policy.</p>
+            </section>
+            <section>
+              <h2>Crash reports from Apple</h2>
+              <p>If you've chosen to share analytics with app developers in the Settings app, Apple may share crash reports and usage statistics about Neiro with us, without identifying you, as Apple describes. You can turn this off in Settings, under Privacy &amp; Security, then Analytics &amp; Improvements.</p>
+            </section>
+            <section>
+              <h2>What Neiro doesn't do</h2>
+              <ul>
+                <li>Ask you to create an account or sign in, except to Game Center if you choose to join the day's board</li>
+                <li>Show advertising</li>
+                <li>Use analytics, tracking or advertising identifiers</li>
+                <li>Track you across other apps or websites</li>
+                <li>Sell or share your data</li>
+                <li>Ask for your location, contacts, photos, camera or microphone</li>
+              </ul>
+            </section>
+            <section>
+              <h2>Children</h2>
+              <p>Neiro doesn't collect personal information from anyone, children included.</p>
+            </section>
+            <section>
+              <h2>This website</h2>
+              <p>This website has no cookies, analytics or trackers, and its fonts are served from the site itself. If you pick a language, your browser remembers the choice in its local storage, on your device. The games on the page run in your browser and send nothing anywhere. Like any website, the service that hosts it may keep standard request logs, such as IP addresses, to keep it running and secure.</p>
+            </section>
+            <section>
+              <h2>Changes</h2>
+              <p>If this policy changes, we'll update it here and change the date at the top.</p>
+            </section>
+            <section>
+              <h2>Contact</h2>
+              <p>Questions about privacy, or anything on this page:</p>
+              <a class="legal-contact" href="mailto:contact@factorylabs.app">contact@factorylabs.app</a>
+            </section>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <!-- Georgian -->
+    <div data-lang-block="ka" lang="ka" hidden>
+      <section class="legal-hero night" data-theme="night">
+        <div class="hero-sky" aria-hidden="true"><span class="glow glow-c"></span></div>
+        <div class="container">
+          <p class="eyebrow">კონფიდენციალურობა</p>
+          <h1 class="display">თქვენი ვარჯიში <em>თქვენია.</em></h1>
+          <p class="lead">Neiro არც ანგარიშს ითხოვს და არც რეკლამას, ანალიტიკას ან თვალთვალს იყენებს. ეს გვერდი მარტივი სიტყვებით გიხსნით, რას ინახავს აპი, სად ინახავს და Apple კომპანიის რომელ სერვისებს იყენებს მხოლოდ მაშინ, როცა თავად აირჩევთ.</p>
+          <p class="legal-date">ბოლო განახლება: 2026 წლის 22 ნოემბერი · ეხება Neiro აპს iPhone ტელეფონისთვის და ამ ვებგვერდს.</p>
+          <ul class="legal-points">
+            <li style="--c: var(--memory)"><b>ანგარიშის გარეშე</b><span>რეგისტრაცია არ გჭირდებათ. ხსნით აპს და თამაშობთ.</span></li>
+            <li style="--c: var(--math)"><b>თვალთვალის გარეშე</b><span>არც რეკლამა, არც ანალიტიკა, არც სხვისი კოდი. არაფერი დაგდევთ.</span></li>
+            <li style="--c: var(--words)"><b>თქვენს ტელეფონზე</b><span>პროგრესი თქვენს ტელეფონზე ინახება, მისი ასლი კი თქვენს საკუთარ iCloud ანგარიშში.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="legal paper" data-theme="paper">
+        <div class="container">
+          <article>
+            <section>
+              <h2>ვინ ვართ</h2>
+              <p>Neiro შექმნილია Factory Labs კომპანიის მიერ. ამ პოლიტიკაში „ჩვენ“ Factory Labs კომპანიას ნიშნავს. კონფიდენციალურობასთან დაკავშირებული კითხვებით მოგვწერეთ: <a href="mailto:contact@factorylabs.app">contact@factorylabs.app</a>.</p>
+            </section>
+            <section>
+              <h2>მოკლედ</h2>
+              <p>Neiro აპიდან არანაირ პერსონალურ მონაცემს არ ვაგროვებთ, არ ვიღებთ, არ ვინახავთ და არ ვყიდით. Neiro ანგარიში არ არსებობს და არც ჩვენი სერვერი, რომელსაც აპი რამეს უგზავნის. აპი მხოლოდ Apple კომპანიის საკუთარი ფრეიმვორკებითაა აწყობილი, სხვისი სარეკლამო, ანალიტიკური ან შეცდომების აღრიცხვის კოდის გარეშე.</p>
+            </section>
+            <section>
+              <h2>რა რჩება თქვენს ტელეფონზე</h2>
+              <p>სამუშაოდ Neiro თქვენს ტელეფონზე, აპის საკუთარ საცავში ინახავს:</p>
+              <ul>
+                <li><strong>თქვენს პროგრესს:</strong> ნათამაშებ თამაშებს, ქულებსა და რეკორდებს, თითოეულ თამაშში მიღწეულ სირთულეს, უნარების ქულებს, დონესა და გამოცდილებას, სერიასა და სერიის დაცვას, ვარჯიშის დღეებს, სამკერდე ნიშნებს და დღის თავსატეხისა და გამოწვევის შედეგებს.</li>
+                <li><strong>თქვენს პარამეტრებს:</strong> ენას, გარეგნობას, არჩეულ უნარებს, შეხსენების დროს და იმას, ჩართულია თუ არა ხმა და ვიბრაცია.</li>
+                <li><strong>თქვენს დუელებს:</strong> ამ ტელეფონზე ნათამაშებ ბოლო ოცდაათ დუელს და სახელს, რომელსაც მათთან ერთად აგზავნით, თუ მიუთითეთ.</li>
+              </ul>
+              <p>Neiro ვიჯეტები ამის მოკლე შეჯამებას და თქვენი ნეირონის სურათს იმავე ტელეფონზე არსებული საცავიდან კითხულობს, რომლის გამოყენებაც მხოლოდ Neiro აპსა და მის ვიჯეტებს შეუძლიათ. აპის წაშლით ეს ყველაფერი ტელეფონიდან იშლება.</p>
+            </section>
+            <section>
+              <h2>iCloud სარეზერვო ასლი</h2>
+              <p>თუ iCloud ანგარიშით ხართ შესული, Neiro თქვენი პროგრესის შეკუმშულ ასლს თქვენს საკუთარ iCloud საცავში ინახავს, რომ ახალმა ტელეფონმა ან ხელახლა დაყენებულმა აპმა იქიდან გააგრძელოს, სადაც გაჩერდით. ასლი თქვენს iCloud ანგარიშშია და მას Apple ინახავს Apple კომპანიის კონფიდენციალურობის პოლიტიკის მიხედვით. ჩვენ მას ვერ ვხედავთ.</p>
+              <p>სარეზერვო ასლის გამორთვა Neiro პარამეტრებში შეგიძლიათ, რაც ასლს წაშლის. პროგრესის თავიდან დაწყებაც მას წაშლის.</p>
+            </section>
+            <section>
+              <h2>Game Center და დღის დაფა</h2>
+              <p>დღის თავსატეხს აქვს დაფა, სადაც ყველას დღის პირველი ამოხსნა ფასდება. მას Apple კომპანიის Game Center სერვისი ინახავს. სანამ თავსატეხს არ გახსნით, Neiro Game Center სერვისს არ მიმართავს, შესვლას კი მხოლოდ მაშინ შემოგთავაზებთ, თუ უკვე შესული არ ხართ და თავად ითხოვთ.</p>
+              <p>თუ შეუერთდებით, Neiro ყოველდღე თქვენი პირველი ამოხსნისთვის Game Center სერვისს ერთ რიცხვს უგზავნის, რომელიც სვლების რაოდენობიდან და დროიდან შედგება. Game Center მას სხვა მოთამაშეებს თქვენი Game Center სახელით აჩვენებს. თუ ნებას დართავთ, Neiro იმასაც აჩვენებს, როგორ ითამაშეს თქვენმა Game Center მეგობრებმა. iOS ჯერ ნებართვას გკითხავთ, მისი შეცვლა კი პარამეტრების აპში შეგიძლიათ.</p>
+              <p>Game Center სერვისს Apple მართავს Apple კომპანიის კონფიდენციალურობის პოლიტიკის მიხედვით. მისგან გამოსვლა პარამეტრების აპში შეგიძლიათ.</p>
+            </section>
+            <section>
+              <h2>დუელები</h2>
+              <p>დუელი იმ ბმულშია, რომელსაც თავად აგზავნით, თქვენ მიერ არჩეული ნებისმიერი აპით. ბმული შეიცავს თამაშს, სირთულეს, რიცხვს, რომელიც ორივე მოთამაშეს ერთსა და იმავე რაუნდებს ურიგებს, ენას, თითოეული მოთამაშის ქულასა და პასუხების რაოდენობას და სახელებს, თუ მიუთითეთ. ვისაც ბმული აქვს, მის შინაარსს წაიკითხავს. დუელის შესახებ ჩვენთან არაფერი იგზავნება.</p>
+            </section>
+            <section>
+              <h2>შეხსენებები</h2>
+              <p>ყოველდღიური შეხსენებები თავად თქვენს ტელეფონზე იგეგმება. მათ არცერთი სერვერი არ აგზავნის. მათი დროის შეცვლა ან გამორთვა Neiro აპში შეგიძლიათ, შეტყობინებების გამორთვა კი პარამეტრების აპში.</p>
+            </section>
+            <section>
+              <h2>Siri და Shortcuts</h2>
+              <p>დღის ვარჯიშის დაწყება Apple კომპანიის App Intents ტექნოლოგიით თქვენს ტელეფონზე მუშაობს. Neiro მხოლოდ დღის ვარჯიშის გახსნის მოთხოვნას იღებს. რასაც Siri ასისტენტს ეუბნებით, მას Apple ამუშავებს Apple კომპანიის კონფიდენციალურობის პოლიტიკის მიხედვით.</p>
+            </section>
+            <section>
+              <h2>შეცდომების ანგარიშები Apple კომპანიისგან</h2>
+              <p>თუ პარამეტრების აპში აირჩიეთ აპების შემქმნელებისთვის ანალიტიკის გაზიარება, Apple შეიძლება Neiro აპის შეცდომების ანგარიშები და გამოყენების სტატისტიკა გაგვიზიაროს თქვენი ვინაობის გარეშე, როგორც ამას Apple აღწერს. ამის გამორთვა პარამეტრებში შეგიძლიათ: Privacy &amp; Security, შემდეგ Analytics &amp; Improvements.</p>
+            </section>
+            <section>
+              <h2>რას არ აკეთებს Neiro</h2>
+              <ul>
+                <li>არ გთხოვთ ანგარიშის შექმნას ან შესვლას, გარდა Game Center სერვისისა, თუ დღის დაფას შეუერთდებით</li>
+                <li>არ აჩვენებს რეკლამას</li>
+                <li>არ იყენებს ანალიტიკას, თვალთვალს ან სარეკლამო იდენტიფიკატორებს</li>
+                <li>არ გითვალთვალებთ სხვა აპებსა და ვებგვერდებზე</li>
+                <li>არ ყიდის და არ აზიარებს თქვენს მონაცემებს</li>
+                <li>არ ითხოვს თქვენს მდებარეობას, კონტაქტებს, ფოტოებს, კამერას ან მიკროფონს</li>
+              </ul>
+            </section>
+            <section>
+              <h2>ბავშვები</h2>
+              <p>Neiro არავისგან, მათ შორის ბავშვებისგან, პერსონალურ ინფორმაციას არ აგროვებს.</p>
+            </section>
+            <section>
+              <h2>ეს ვებგვერდი</h2>
+              <p>ამ ვებგვერდს არც ქუქიები აქვს, არც ანალიტიკა და არც თვალთვალი, შრიფტები კი თავად საიტიდან იტვირთება. თუ ენას აირჩევთ, ბრაუზერი ამ არჩევანს თავის ლოკალურ საცავში, თქვენს მოწყობილობაზე იმახსოვრებს. გვერდზე არსებული თამაშები თქვენს ბრაუზერში მუშაობს და არსად არაფერს აგზავნის. როგორც ნებისმიერი ვებგვერდის შემთხვევაში, ჰოსტინგის სერვისმა შეიძლება შეინახოს მოთხოვნების სტანდარტული ჟურნალი, მაგალითად, IP მისამართები, საიტის მუშაობისა და უსაფრთხოებისთვის.</p>
+            </section>
+            <section>
+              <h2>ცვლილებები</h2>
+              <p>თუ ეს პოლიტიკა შეიცვლება, აქვე განვაახლებთ და ზემოთ თარიღს შევცვლით.</p>
+            </section>
+            <section>
+              <h2>კონტაქტი</h2>
+              <p>კითხვები კონფიდენციალურობაზე ან ამ გვერდზე:</p>
+              <a class="legal-contact" href="mailto:contact@factorylabs.app">contact@factorylabs.app</a>
+            </section>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer night" data-theme="night">
+    <div class="container footer-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/img/icon-64.png" width="28" height="28" alt="">
+        <span>Neiro</span>
+      </a>
+      <nav class="footer-links" aria-label="Footer" data-i18n-aria="footer.nav">
+        <a href="index.html#games" data-i18n="footer.games">Games</a>
+        <a href="index.html#how" data-i18n="footer.how">How it works</a>
+        <a href="index.html#promise" data-i18n="footer.promise">What to expect</a>
+        <a href="index.html#faq" data-i18n="footer.faq">FAQ</a>
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy</a>
+        <span class="lang-switch small" role="group" aria-label="Language" data-i18n-aria="nav.lang">
+          <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="ka" lang="ka" aria-pressed="false">ქა</button>
+        </span>
+      </nav>
+      <p class="footer-small" data-i18n="footer.small">Neiro is a brain training game. It isn't a medical product and doesn't diagnose, treat, or prevent any condition.<br>Apple, the Apple logo, iPhone and App Store are trademarks of Apple Inc. © 2026 Factory Labs.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/page.js"></script>
+</body>
+</html>

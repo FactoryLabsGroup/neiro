@@ -1,0 +1,3 @@
+# Raw Simulator captures and the build used to make them (tools/capture-screens.sh).
+tools/raw/
+.DS_Store

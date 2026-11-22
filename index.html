@@ -3,14 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Neiro · Brain training, five minutes a day</title>
-  <meta name="description" content="Neiro is a brain training app for iPhone. Three short, adaptive games a day across seven skills: memory, attention, speed, flexibility, problem solving, math and words. Every game grows your neuron.">
+  <script>
+    // Choose the language before anything is drawn: a link's ?lang=, then a choice made here
+    // before, then the browser's languages. Georgian waits for its words so English never flashes.
+    (function () {
+      var d = document.documentElement, l = null, q = null, s = null;
+      try { q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+      try { s = localStorage.getItem('neiro.lang'); } catch (e) {}
+      if (q === 'en' || q === 'ka') l = q;
+      else if (s === 'en' || s === 'ka') l = s;
+      else l = (navigator.languages || [navigator.language || '']).some(function (x) { return /^ka\b/i.test(x); }) ? 'ka' : 'en';
+      d.lang = l;
+      if (l === 'ka') {
+        d.className += ' lang-pending';
+        setTimeout(function () { d.classList.remove('lang-pending'); }, 2500);
+      }
+    })();
+  </script>
+  <title data-i18n="meta.title">Neiro · Brain training, five minutes a day</title>
+  <meta name="description" data-i18n-content="meta.desc" content="Neiro is a brain training app for iPhone. Three short, adaptive games a day across seven skills: memory, attention, speed, flexibility, problem solving, math and words. Every game grows your neuron.">
   <meta name="theme-color" content="#0B0C0F">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Neiro · Grow your mind, five minutes a day">
   <meta property="og:description" content="Three short games a day, chosen from 28 across seven skills. Every game grows your neuron, and every day you finish lights a star.">
   <meta property="og:image" content="assets/img/icon-512.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ka_GE">
   <meta name="twitter:card" content="summary">
+  <link rel="alternate" hreflang="en" href="?lang=en">
+  <link rel="alternate" hreflang="ka" href="?lang=ka">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon-32.png">
   <link rel="icon" type="image/png" sizes="64x64" href="assets/img/icon-64.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
@@ -19,25 +40,29 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
   <!-- Navigation -->
   <header class="nav" id="nav" data-on="night">
     <div class="nav-inner container">
-      <a class="brand" href="#top" aria-label="Neiro, back to top">
+      <a class="brand" href="#top" aria-label="Neiro, back to top" data-i18n-aria="brand.top">
         <img src="assets/img/icon-64.png" width="32" height="32" alt="">
         <span>Neiro</span>
       </a>
-      <nav class="nav-links" aria-label="Sections">
-        <a href="#day">A day</a>
-        <a href="#games">Games</a>
-        <a href="#try">Try it</a>
-        <a href="#how">How it works</a>
-        <a href="#faq">FAQ</a>
+      <nav class="nav-links" aria-label="Sections" data-i18n-aria="nav.sections">
+        <a href="#day" data-i18n="nav.day">A day</a>
+        <a href="#games" data-i18n="nav.games">Games</a>
+        <a href="#try" data-i18n="nav.try">Try it</a>
+        <a href="#how" data-i18n="nav.how">How it works</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
       </nav>
-      <a class="nav-cta" data-appstore href="https://apps.apple.com/">
+      <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria="nav.lang">
+        <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="ka" lang="ka" aria-pressed="false">ქა</button>
+      </div>
+      <a class="nav-cta" data-appstore href="https://apps.apple.com/" aria-label="Download Neiro on the App Store" data-i18n-aria="appstore.aria">
         <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#apple"/></svg>
-        <span>Download</span>
+        <span data-i18n="nav.download">Download</span>
       </a>
     </div>
   </header>
@@ -57,24 +82,24 @@
         <div class="hero-copy">
           <p class="pill reveal">
             <span class="spectrum-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            Brain training for iPhone
+            <span data-i18n="hero.pill">Brain training for iPhone</span>
           </p>
-          <h1 class="display reveal">Grow your mind, <em>five minutes</em> a day.</h1>
-          <p class="lead reveal">Three short games a day, chosen for you from 28 across seven skills. Every game you play grows your neuron, and every day you finish lights a star.</p>
+          <h1 class="display reveal" data-i18n="hero.title">Grow your mind, <em>five minutes</em> a day.</h1>
+          <p class="lead reveal" data-i18n="hero.lead">Three short games a day, chosen for you from 28 across seven skills. Every game you play grows your neuron, and every day you finish lights a star.</p>
           <div class="cta-row reveal">
-            <a class="appstore" data-appstore href="https://apps.apple.com/" aria-label="Download Neiro on the App Store">
+            <a class="appstore" data-appstore href="https://apps.apple.com/" aria-label="Download Neiro on the App Store" data-i18n-aria="appstore.aria">
               <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#apple"/></svg>
               <span><small>Download on the</small><strong>App Store</strong></span>
             </a>
             <a class="btn-ghost" href="#try">
               <span class="play-dot" aria-hidden="true"></span>
-              Try a game here
+              <span data-i18n="hero.try">Try a game here</span>
             </a>
           </div>
-          <ul class="hero-facts reveal" aria-label="At a glance">
-            <li><strong>28</strong><span>adaptive games</span></li>
-            <li><strong>7</strong><span>mental skills</span></li>
-            <li><strong>3</strong><span>games a day</span></li>
+          <ul class="hero-facts reveal" aria-label="At a glance" data-i18n-aria="hero.facts">
+            <li><strong>28</strong><span data-i18n="hero.fact1">adaptive games</span></li>
+            <li><strong>7</strong><span data-i18n="hero.fact2">mental skills</span></li>
+            <li><strong>3</strong><span data-i18n="hero.fact3">games a day</span></li>
           </ul>
         </div>
 
@@ -83,8 +108,8 @@
           <figure class="phone hero-phone reveal" data-delay="1">
             <div class="phone-frame">
               <div class="phone-screen">
-                <img src="assets/screens/home.webp" srcset="assets/screens/home-sm.webp 474w, assets/screens/home.webp 948w" sizes="(max-width: 700px) 62vw, 320px" width="948" height="2052"
-                  alt="Neiro's home screen: today's training card with three games, the daily puzzle, the daily challenge, and the Neiro score of 609.">
+                <img class="shot" src="assets/screens/ka/home.webp" srcset="assets/screens/ka/home-sm.webp 474w, assets/screens/ka/home.webp 948w" sizes="(max-width: 700px) 62vw, 320px" width="948" height="2052"
+                  data-i18n-alt="shot.home" alt="Neiro's home screen: today's training card with three games, the daily puzzle, the daily challenge, and the Neiro score of 609.">
               </div>
               <span class="phone-island" aria-hidden="true"></span>
             </div>
@@ -94,15 +119,7 @@
       </div>
 
       <div class="container">
-        <ul class="skill-ribbon reveal" aria-label="The seven skills">
-          <li style="--c: var(--memory)">Memory</li>
-          <li style="--c: var(--attention)">Attention</li>
-          <li style="--c: var(--speed)">Speed</li>
-          <li style="--c: var(--flexibility)">Flexibility</li>
-          <li style="--c: var(--problem)">Problem solving</li>
-          <li style="--c: var(--math)">Math</li>
-          <li style="--c: var(--words)">Words</li>
-        </ul>
+        <ul class="skill-ribbon reveal" id="skill-ribbon" aria-label="The seven skills" data-i18n-aria="hero.skills"></ul>
       </div>
     </section>
 
@@ -110,38 +127,38 @@
     <section class="day paper" id="day" data-theme="paper">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">A day in Neiro</p>
-          <h2>Three games. <em>About five minutes.</em></h2>
-          <p class="lead">A little every day works best. So each day has a shape: three short games, a puzzle and a challenge if you want more, and a star at the end.</p>
+          <p class="eyebrow" data-i18n="day.eyebrow">A day in Neiro</p>
+          <h2 data-i18n="day.title">Three games. <em>About five minutes.</em></h2>
+          <p class="lead" data-i18n="day.lead">A little every day works best. So each day has a shape: three short games, a puzzle and a challenge if you want more, and a star at the end.</p>
         </header>
 
         <div class="story">
           <ol class="story-steps">
             <li class="story-step" data-screen="0">
               <span class="step-num" aria-hidden="true">01</span>
-              <h3>Three games, picked for you</h3>
-              <p>Every day Neiro plans three games from three different skills. The skills you want to get better at come first, but one trained in the last two days waits its turn, so a week covers all seven.</p>
-              <p class="step-aside">Each game starts with a practice round the first time, so you learn as you play.</p>
+              <h3 data-i18n="day.s1.title">Three games, picked for you</h3>
+              <p data-i18n="day.s1.body">Every day Neiro plans three games from three different skills. The skills you want to get better at come first, but one trained in the last two days waits its turn, so a week covers all seven.</p>
+              <p class="step-aside" data-i18n="day.s1.aside">Each game starts with a practice round the first time, so you learn as you play.</p>
               <figure class="phone phone-inline">
-                <div class="phone-frame"><div class="phone-screen"><img src="assets/screens/adaptive-sm.webp" width="474" height="1026" loading="lazy" alt="Flight, an attention game: a glider flies through green rings over a night valley, toward gold stars."></div><span class="phone-island" aria-hidden="true"></span></div>
+                <div class="phone-frame"><div class="phone-screen"><img class="shot" src="assets/screens/ka/adaptive-sm.webp" width="474" height="1026" loading="lazy" data-i18n-alt="shot.adaptive" alt="Flight, an attention game: a glider flies through green rings over a night valley, toward gold stars."></div><span class="phone-island" aria-hidden="true"></span></div>
               </figure>
             </li>
             <li class="story-step" data-screen="1">
               <span class="step-num" aria-hidden="true">02</span>
-              <h3>A puzzle for everyone, and a challenge for you</h3>
-              <p>One puzzle a day, the same board for everyone, gentle on Mondays and hardest on Sundays. And one small challenge on top, like six right in a row, or a game outside today's three.</p>
-              <p class="step-aside">The puzzle is planning for fun. It adds to your level, never to your skill scores.</p>
+              <h3 data-i18n="day.s2.title">A puzzle for everyone, and a challenge for you</h3>
+              <p data-i18n="day.s2.body">One puzzle a day, the same board for everyone, gentle on Mondays and hardest on Sundays. And one small challenge on top, like six right in a row, or a game outside today's three.</p>
+              <p class="step-aside" data-i18n="day.s2.aside">The puzzle is planning for fun. It adds to your level, never to your skill scores.</p>
               <figure class="phone phone-inline">
-                <div class="phone-frame"><div class="phone-screen"><img src="assets/screens/puzzle-sm.webp" width="474" height="1026" loading="lazy" alt="The daily puzzle: an orb on a frozen pond of rocks, and a gold star it has to reach."></div><span class="phone-island" aria-hidden="true"></span></div>
+                <div class="phone-frame"><div class="phone-screen"><img class="shot" src="assets/screens/ka/puzzle-sm.webp" width="474" height="1026" loading="lazy" data-i18n-alt="shot.puzzle" alt="The daily puzzle: an orb on a frozen pond of rocks, and a gold star it has to reach."></div><span class="phone-island" aria-hidden="true"></span></div>
               </figure>
             </li>
             <li class="story-step" data-screen="2">
               <span class="step-num" aria-hidden="true">03</span>
-              <h3>A star, a streak, a growing neuron</h3>
-              <p>Finish the day and your neuron grows a node for every game. Then your streak ticks up and tonight's star lights in your sky, seven to a constellation.</p>
-              <p class="step-aside">Every seven days in a row earns a streak freeze, for the day life gets in the way.</p>
+              <h3 data-i18n="day.s3.title">A star, a streak, a growing neuron</h3>
+              <p data-i18n="day.s3.body">Finish the day and your neuron grows a node for every game. Then your streak ticks up and tonight's star lights in your sky, seven to a constellation.</p>
+              <p class="step-aside" data-i18n="day.s3.aside">Every seven days in a row earns a streak freeze, for the day life gets in the way.</p>
               <figure class="phone phone-inline">
-                <div class="phone-frame"><div class="phone-screen"><img src="assets/screens/streak-sm.webp" width="474" height="1026" loading="lazy" alt="The end of a training day: the neuron has grown, the week's flames are lit, and a new star joins Cassiopeia."></div><span class="phone-island" aria-hidden="true"></span></div>
+                <div class="phone-frame"><div class="phone-screen"><img class="shot" src="assets/screens/ka/streak-sm.webp" width="474" height="1026" loading="lazy" data-i18n-alt="shot.streak" alt="The end of a training day: the neuron has grown, the week's flames are lit, and a new star joins Cassiopeia."></div><span class="phone-island" aria-hidden="true"></span></div>
               </figure>
             </li>
           </ol>
@@ -151,9 +168,9 @@
               <figure class="phone story-phone">
                 <div class="phone-frame">
                   <div class="phone-screen">
-                    <img class="is-active" src="assets/screens/adaptive.webp" width="948" height="2052" loading="lazy" alt="">
-                    <img src="assets/screens/puzzle.webp" width="948" height="2052" loading="lazy" alt="">
-                    <img src="assets/screens/streak.webp" width="948" height="2052" loading="lazy" alt="">
+                    <img class="shot is-active" src="assets/screens/ka/adaptive.webp" width="948" height="2052" loading="lazy" alt="">
+                    <img class="shot" src="assets/screens/ka/puzzle.webp" width="948" height="2052" loading="lazy" alt="">
+                    <img class="shot" src="assets/screens/ka/streak.webp" width="948" height="2052" loading="lazy" alt="">
                   </div>
                   <span class="phone-island"></span>
                 </div>
@@ -162,7 +179,7 @@
             </div>
           </div>
         </div>
-        <p class="lang-note reveal">Screens shown in Georgian, one of Neiro's two languages. The app is in English and Georgian, and switches between them without a restart.</p>
+        <p class="lang-note reveal" id="lang-note">Neiro is in English and Georgian, and switches between them without a restart.</p>
       </div>
     </section>
 
@@ -170,38 +187,38 @@
     <section class="games night" id="games" data-theme="night">
       <div class="container">
         <header class="section-head center reveal">
-          <p class="eyebrow">The games</p>
-          <h2>28 games for <em>seven skills.</em></h2>
-          <p class="lead">Every game is a short, playable version of a task scientists use to study the mind. Each one adapts to you, and each says in one everyday sentence what it trains.</p>
+          <p class="eyebrow" data-i18n="games.eyebrow">The games</p>
+          <h2 data-i18n="games.title">28 games for <em>seven skills.</em></h2>
+          <p class="lead" data-i18n="games.lead">Every game is a short, playable version of a task scientists use to study the mind. Each one adapts to you, and each says in one everyday sentence what it trains.</p>
         </header>
 
-        <div class="wall" id="wall" role="list" aria-label="All 28 games, grouped by skill"></div>
-        <p class="wall-note reveal">Seven games are open from the start, one for every skill. Each new level opens one more, until all 28 are yours at level 22. <span class="wall-hint">Choose any game to see what it trains.</span></p>
+        <div class="wall" id="wall" role="list" aria-label="All 28 games, grouped by skill" data-i18n-aria="games.wall"></div>
+        <p class="wall-note reveal" data-i18n="games.note">Seven games are open from the start, one for every skill. Each new level opens one more, until all 28 are yours at level 22. <span class="wall-hint">Choose any game to see what it trains.</span></p>
 
         <div class="craft">
           <div class="craft-phones reveal">
             <figure class="phone craft-back">
-              <div class="phone-frame"><div class="phone-screen"><img src="assets/screens/games-sm.webp" srcset="assets/screens/games-sm.webp 474w, assets/screens/games.webp 948w" sizes="280px" width="948" height="2052" loading="lazy" alt="Rows of game cards that scroll sideways, grouped by skill, each with its own artwork, difficulty and best score."></div><span class="phone-island" aria-hidden="true"></span></div>
+              <div class="phone-frame"><div class="phone-screen"><img class="shot" src="assets/screens/ka/games-sm.webp" srcset="assets/screens/ka/games-sm.webp 474w, assets/screens/ka/games.webp 948w" sizes="280px" width="948" height="2052" loading="lazy" data-i18n-alt="shot.games" alt="Rows of game cards that scroll sideways, grouped by skill, each with its own artwork, difficulty and best score."></div><span class="phone-island" aria-hidden="true"></span></div>
             </figure>
             <figure class="phone craft-front">
-              <div class="phone-frame"><div class="phone-screen"><img src="assets/screens/3d-sm.webp" srcset="assets/screens/3d-sm.webp 474w, assets/screens/3d.webp 948w" sizes="280px" width="948" height="2052" loading="lazy" alt="Spin, drawn in 3D: four figures of cubes, and the question which one is the original turned."></div><span class="phone-island" aria-hidden="true"></span></div>
+              <div class="phone-frame"><div class="phone-screen"><img class="shot" src="assets/screens/ka/3d-sm.webp" srcset="assets/screens/ka/3d-sm.webp 474w, assets/screens/ka/3d.webp 948w" sizes="280px" width="948" height="2052" loading="lazy" data-i18n-alt="shot.3d" alt="Spin, drawn in 3D: four figures of cubes, and the question which one is the original turned."></div><span class="phone-island" aria-hidden="true"></span></div>
             </figure>
           </div>
           <div class="craft-copy">
-            <p class="eyebrow reveal">Drawn with care</p>
-            <h3 class="h3 reveal">Games that feel like <em>little worlds.</em></h3>
+            <p class="eyebrow reveal" data-i18n="craft.eyebrow">Drawn with care</p>
+            <h3 class="h3 reveal" data-i18n="craft.title">Games that feel like <em>little worlds.</em></h3>
             <ul class="craft-list">
               <li class="reveal">
-                <strong>Living artwork</strong>
-                <span>Every game has a looping illustration of itself, drawn in code, on its card and its intro page. Your day's three tint the top of home.</span>
+                <strong data-i18n="craft.art.title">Living artwork</strong>
+                <span data-i18n="craft.art.body">Every game has a looping illustration of itself, drawn in code, on its card and its intro page. Your day's three tint the top of home.</span>
               </li>
               <li class="reveal">
-                <strong>Six games in 3D</strong>
-                <span>Treasure, Spin, Flight, Signal, Navigator and Brake are drawn in three dimensions by a small renderer of the app's own.</span>
+                <strong data-i18n="craft.3d.title">Six games in 3D</strong>
+                <span data-i18n="craft.3d.body">Treasure, Spin, Flight, Signal, Navigator and Brake are drawn in three dimensions by a small renderer of the app's own.</span>
               </li>
               <li class="reveal">
-                <strong>Sound and touch</strong>
-                <span>Every sound is synthesised: glassy struck tones, and a pentatonic scale for Echo. A gentle haptic on every answer.</span>
+                <strong data-i18n="craft.sound.title">Sound and touch</strong>
+                <span data-i18n="craft.sound.body">Every sound is synthesised: glassy struck tones, and a pentatonic scale for Echo. A gentle haptic on every answer.</span>
               </li>
             </ul>
           </div>
@@ -210,7 +227,7 @@
 
       <dialog class="game-dialog" id="game-dialog" aria-labelledby="gd-title">
         <div class="gd-inner">
-          <button class="gd-close" type="button" data-close aria-label="Close">
+          <button class="gd-close" type="button" data-close aria-label="Close" data-i18n-aria="gd.close">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
           <div class="gd-art" id="gd-art"></div>
@@ -220,13 +237,13 @@
             <p class="gd-tagline" id="gd-tagline"></p>
             <p class="gd-trains" id="gd-trains"></p>
             <dl class="gd-meta">
-              <div><dt>Based on</dt><dd id="gd-basis"></dd></div>
-              <div><dt>A session</dt><dd id="gd-format"></dd></div>
-              <div><dt>Opens</dt><dd id="gd-level"></dd></div>
+              <div><dt data-i18n="gd.basis">Based on</dt><dd id="gd-basis"></dd></div>
+              <div><dt data-i18n="gd.format">A session</dt><dd id="gd-format"></dd></div>
+              <div><dt data-i18n="gd.level">Opens</dt><dd id="gd-level"></dd></div>
             </dl>
             <div class="gd-nav">
-              <button type="button" class="btn-small" data-step="-1" aria-label="Previous game">‹ Previous</button>
-              <button type="button" class="btn-small" data-step="1" aria-label="Next game">Next ›</button>
+              <button type="button" class="btn-small" data-step="-1" aria-label="Previous game" data-i18n-aria="gd.prevAria" data-i18n="gd.prev">‹ Previous</button>
+              <button type="button" class="btn-small" data-step="1" aria-label="Next game" data-i18n-aria="gd.nextAria" data-i18n="gd.next">Next ›</button>
             </div>
           </div>
         </div>
@@ -237,30 +254,30 @@
     <section class="try night" id="try" data-theme="night">
       <div class="container">
         <header class="section-head center reveal">
-          <p class="eyebrow">Try it here</p>
-          <h2>Two games, <em>right in your browser.</em></h2>
-          <p class="lead">Short versions of two Neiro games, played by the app's own rules. Watch the difficulty climb when you get them right, and ease off when you don't.</p>
+          <p class="eyebrow" data-i18n="try.eyebrow">Try it here</p>
+          <h2 data-i18n="try.title">Two games, <em>right in your browser.</em></h2>
+          <p class="lead" data-i18n="try.lead">Short versions of two Neiro games, played by the app's own rules. Watch the difficulty climb when you get them right, and ease off when you don't.</p>
         </header>
 
         <div class="demos">
           <article class="demo reveal" id="demo-constellation" style="--hue: var(--memory); --hue-glow: #B4A1FF">
             <header class="demo-head">
-              <span class="chip" style="--c: var(--memory)">Memory</span>
-              <h3>Constellation</h3>
-              <p>Stars light up on the night sky. Tap where they were.</p>
+              <span class="chip" style="--c: var(--memory)" data-i18n="try.c.chip">Memory</span>
+              <h3 data-i18n="try.c.title">Constellation</h3>
+              <p data-i18n="try.c.body">Stars light up on the night sky. Tap where they were.</p>
             </header>
             <div class="board night-well">
               <div class="hud">
-                <div><small>Score</small><b data-score>0</b></div>
-                <div class="hud-mid"><small>Difficulty</small><span class="diff" data-diff><b>1</b><i></i></span></div>
-                <div><small>Round</small><b data-progress>0/6</b></div>
+                <div><small data-i18n="hud.score">Score</small><b data-score>0</b></div>
+                <div class="hud-mid"><small data-i18n="hud.diff">Difficulty</small><span class="diff" data-diff><b>1</b><i></i></span></div>
+                <div><small data-i18n="hud.round">Round</small><b data-progress>0/6</b></div>
               </div>
-              <div class="stars-grid" data-grid aria-label="Night sky"></div>
-              <p class="board-msg" data-msg aria-live="polite">Six rounds. Remember where the stars light up.</p>
+              <div class="stars-grid" data-grid aria-label="Night sky" data-i18n-aria="try.c.sky"></div>
+              <p class="board-msg" data-msg aria-live="polite"></p>
               <div class="board-overlay" data-overlay>
                 <button class="btn-primary" type="button" data-start>
                   <span class="btn-disc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
-                  Play Constellation
+                  <span data-label>Play Constellation</span>
                 </button>
               </div>
             </div>
@@ -268,32 +285,32 @@
 
           <article class="demo reveal" data-delay="1" id="demo-ink" style="--hue: var(--flexibility); --hue-glow: #FF97CF">
             <header class="demo-head">
-              <span class="chip" style="--c: var(--flexibility)">Flexibility</span>
-              <h3>Ink</h3>
-              <p>Tap the colour of the ink, not the word.</p>
+              <span class="chip" style="--c: var(--flexibility)" data-i18n="try.i.chip">Flexibility</span>
+              <h3 data-i18n="try.i.title">Ink</h3>
+              <p data-i18n="try.i.body">Tap the colour of the ink, not the word.</p>
             </header>
             <div class="board night-well">
               <div class="hud">
-                <div><small>Score</small><b data-score>0</b></div>
-                <div class="hud-mid"><small>Difficulty</small><span class="diff" data-diff><b>1</b><i></i></span></div>
-                <div><small>Time</small><b data-progress>30</b></div>
+                <div><small data-i18n="hud.score">Score</small><b data-score>0</b></div>
+                <div class="hud-mid"><small data-i18n="hud.diff">Difficulty</small><span class="diff" data-diff><b>1</b><i></i></span></div>
+                <div><small data-i18n="hud.time">Time</small><b data-progress>30</b></div>
               </div>
               <div class="ink-stage">
                 <div class="ink-deadline" data-deadline><i></i></div>
                 <p class="ink-word" data-word aria-live="polite"></p>
               </div>
               <div class="ink-swatches" data-swatches></div>
-              <p class="board-msg" data-msg aria-live="polite">Thirty seconds. Framed words ask for what the word says.</p>
+              <p class="board-msg" data-msg aria-live="polite"></p>
               <div class="board-overlay" data-overlay>
                 <button class="btn-primary" type="button" data-start>
                   <span class="btn-disc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
-                  Play Ink
+                  <span data-label>Play Ink</span>
                 </button>
               </div>
             </div>
           </article>
         </div>
-        <p class="fineprint reveal">In the app every game runs longer, adds to your skill scores, grows your neuron, and starts a step below where you finished last time, as a warm up.</p>
+        <p class="fineprint reveal" data-i18n="try.fine">In the app every game runs longer, adds to your skill scores, grows your neuron, and starts a step below where you finished last time, as a warm up.</p>
       </div>
     </section>
 
@@ -301,9 +318,9 @@
     <section class="how paper" id="how" data-theme="paper">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">How it works</p>
-          <h2>Always at the edge of <em>what you can do.</em></h2>
-          <p class="lead">Each game gets harder when you're doing well and easier when you're not. So you always practise right at the edge of what you can do, which is where practice works best.</p>
+          <p class="eyebrow" data-i18n="how.eyebrow">How it works</p>
+          <h2 data-i18n="how.title">Always at the edge of <em>what you can do.</em></h2>
+          <p class="lead" data-i18n="how.lead">Each game gets harder when you're doing well and easier when you're not. So you always practise right at the edge of what you can do, which is where practice works best.</p>
         </header>
 
         <div class="how-grid">
@@ -314,16 +331,16 @@
                 <p class="stair-sub" id="stair-sub">Four right in a row step it up. Two misses step it down.</p>
               </div>
               <ul class="stair-legend" aria-hidden="true">
-                <li><i class="ok"></i>Right</li>
-                <li><i class="no"></i>Missed</li>
+                <li><i class="ok"></i><span data-i18n="how.right">Right</span></li>
+                <li><i class="no"></i><span data-i18n="how.missed">Missed</span></li>
               </ul>
             </div>
             <svg class="stair-chart" id="stair-chart" viewBox="0 0 640 260" role="img" aria-labelledby="stair-label"></svg>
-            <p class="stair-foot">The same idea runs every game: a <strong>staircase</strong>, borrowed from how researchers measure perception. Everyone settles where practice is hardest but still winnable.</p>
+            <p class="stair-foot" data-i18n="how.foot">The same idea runs every game: a <strong>staircase</strong>, borrowed from how researchers measure perception. Everyone settles where practice is hardest but still winnable.</p>
           </div>
 
           <figure class="phone how-phone reveal" data-delay="1">
-            <div class="phone-frame"><div class="phone-screen"><img src="assets/screens/progress-sm.webp" srcset="assets/screens/progress-sm.webp 474w, assets/screens/progress.webp 948w" sizes="300px" width="948" height="2052" loading="lazy" alt="The progress sheet: a Neiro score of 609 with a twelve week chart, and a score for each of the seven skills."></div><span class="phone-island" aria-hidden="true"></span></div>
+            <div class="phone-frame"><div class="phone-screen"><img class="shot" src="assets/screens/ka/progress-sm.webp" srcset="assets/screens/ka/progress-sm.webp 474w, assets/screens/ka/progress.webp 948w" sizes="300px" width="948" height="2052" loading="lazy" data-i18n-alt="shot.progress" alt="The progress sheet: a Neiro score of 609 with a twelve week chart, and a score for each of the seven skills."></div><span class="phone-island" aria-hidden="true"></span></div>
           </figure>
         </div>
 
@@ -332,27 +349,27 @@
             <span class="pillar-icon" style="--c: var(--memory)" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v5.5L5 18a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9.5V3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             </span>
-            <h3>Built on real research</h3>
-            <p>Every game is a short, playable version of a task scientists use to study the mind. Echo comes from the Corsi block test, Compass from the flanker task, Towers from the Tower of London.</p>
+            <h3 data-i18n="how.p1.title">Built on real research</h3>
+            <p data-i18n="how.p1.body">Every game is a short, playable version of a task scientists use to study the mind. Echo comes from the Corsi block test, Compass from the flanker task, Towers from the Tower of London.</p>
           </article>
           <article class="pillar reveal" data-delay="1">
             <span class="pillar-icon" style="--c: var(--problem)" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 15l4-4 3 2 5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <h3>A score that's only about you</h3>
-            <p>Each skill scores from 0 to 1,000, from the difficulty you reach and how accurate you are in recent games. It compares you only with yourself.</p>
+            <h3 data-i18n="how.p2.title">A score that's only about you</h3>
+            <p data-i18n="how.p2.body">Each skill scores from 0 to 1,000, from the difficulty you reach and how accurate you are in recent games. It compares you only with yourself.</p>
           </article>
           <article class="pillar reveal" data-delay="2">
             <span class="pillar-icon" style="--c: var(--speed)" aria-hidden="true">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><text x="12" y="15.6" text-anchor="middle" font-size="9" font-weight="800" fill="currentColor" font-family="ui-rounded, Nunito, sans-serif">12</text></svg>
             </span>
-            <h3>Levels for effort, not cleverness</h3>
-            <p>Your level says how much you've trained, never how clever you are. Experience comes from playing, not from scores, and each level opens a new game.</p>
+            <h3 data-i18n="how.p3.title">Levels for effort, not cleverness</h3>
+            <p data-i18n="how.p3.body">Your level says how much you've trained, never how clever you are. Experience comes from playing, not from scores, and each level opens a new game.</p>
           </article>
         </div>
 
         <div class="research reveal">
-          <p class="research-title">Where the games come from</p>
+          <p class="research-title" data-i18n="how.research">Where the games come from</p>
           <ul class="research-list" id="research-list"></ul>
         </div>
       </div>
@@ -362,26 +379,26 @@
     <section class="neuron-sec night" id="neuron" data-theme="night">
       <div class="container neuron-grid">
         <div class="neuron-copy">
-          <p class="eyebrow reveal">Your neuron</p>
-          <h2 class="reveal">A picture of <em>all your training.</em></h2>
-          <p class="lead reveal">Seven branches, one for each skill. Every game you play grows its skill's branch by one node, so you can see what you train most and what could use more.</p>
+          <p class="eyebrow reveal" data-i18n="neuron.eyebrow">Your neuron</p>
+          <h2 class="reveal" data-i18n="neuron.title">A picture of <em>all your training.</em></h2>
+          <p class="lead reveal" data-i18n="neuron.lead">Seven branches, one for each skill. Every game you play grows its skill's branch by one node, so you can see what you train most and what could use more.</p>
 
           <div class="grow-panel reveal" role="group" aria-labelledby="grow-title">
             <div class="grow-head">
-              <p id="grow-title">Play a game in</p>
-              <p class="grow-count" aria-live="polite"><b id="grow-count">0</b> games played</p>
+              <p id="grow-title" data-i18n="neuron.play">Play a game in</p>
+              <p class="grow-count" aria-live="polite"><span data-i18n="neuron.countBefore"></span><b id="grow-count">0</b><span data-i18n="neuron.countAfter"> games played</span></p>
             </div>
             <div class="grow-buttons" id="grow-buttons"></div>
             <div class="grow-actions">
-              <button type="button" class="btn-small" id="grow-week">Play a week</button>
-              <button type="button" class="btn-small" id="grow-seed">Grow another</button>
-              <button type="button" class="btn-small quiet" id="grow-reset">Start over</button>
+              <button type="button" class="btn-small" id="grow-week" data-i18n="neuron.week">Play a week</button>
+              <button type="button" class="btn-small" id="grow-seed" data-i18n="neuron.seed">Grow another</button>
+              <button type="button" class="btn-small quiet" id="grow-reset" data-i18n="neuron.reset">Start over</button>
             </div>
           </div>
-          <p class="neuron-note reveal">Grown here by the same rules as in the app. Each player's neuron comes from a seed of their own, so no two look alike.</p>
+          <p class="neuron-note reveal" data-i18n="neuron.note">Grown here by the same rules as in the app. Each player's neuron comes from a seed of their own, so no two look alike.</p>
         </div>
         <div class="neuron-stage reveal" data-delay="1">
-          <canvas id="neuron-canvas" aria-label="An interactive neuron with seven coloured branches"></canvas>
+          <canvas id="neuron-canvas" aria-label="An interactive neuron with seven coloured branches" data-i18n-aria="neuron.canvas"></canvas>
         </div>
       </div>
     </section>
@@ -390,13 +407,13 @@
     <section class="sky night" id="sky" data-theme="night">
       <div class="container">
         <header class="section-head center reveal">
-          <p class="eyebrow">Your sky</p>
-          <h2>Every finished day <em>lights a star.</em></h2>
-          <p class="lead">Seven stars make a constellation, twelve in all, drawn after the real figures. A day you miss never takes a star away. The next one simply waits for you.</p>
+          <p class="eyebrow" data-i18n="sky.eyebrow">Your sky</p>
+          <h2 data-i18n="sky.title">Every finished day <em>lights a star.</em></h2>
+          <p class="lead" data-i18n="sky.lead">Seven stars make a constellation, twelve in all, drawn after the real figures. A day you miss never takes a star away. The next one simply waits for you.</p>
         </header>
 
         <div class="sky-control reveal">
-          <label for="sky-days">Days of training</label>
+          <label for="sky-days" data-i18n="sky.days">Days of training</label>
           <input type="range" id="sky-days" min="0" max="84" value="10" step="1">
           <output id="sky-days-out" for="sky-days">10</output>
           <p class="sky-status" id="sky-status" aria-live="polite"></p>
@@ -407,15 +424,15 @@
         <div class="sky-notes">
           <div class="sky-note reveal">
             <span class="note-icon flame" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5c.6 3.2 4.8 5.5 4.8 10.6A4.8 4.8 0 0 1 12 18a4.8 4.8 0 0 1-4.8-4.9c0-2.4 1.4-3.6 2.2-5 .2 1.6.8 2.6 1.8 3.1C10.8 8.4 11.1 5.2 12 2.5z" fill="currentColor"/></svg></span>
-            <div><h3>A streak worth keeping</h3><p>Three games keep it going. It survives until the end of the next day, so it isn't lost at breakfast.</p></div>
+            <div><h3 data-i18n="sky.n1.title">A streak worth keeping</h3><p data-i18n="sky.n1.body">Three games keep it going. It survives until the end of the next day, so it isn't lost at breakfast.</p></div>
           </div>
           <div class="sky-note reveal" data-delay="1">
             <span class="note-icon ice" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><h3>Freezes for busy days</h3><p>Every seven days in a row earns a streak freeze, and you can hold two. A frozen day carries the streak across.</p></div>
+            <div><h3 data-i18n="sky.n2.title">Freezes for busy days</h3><p data-i18n="sky.n2.body">Every seven days in a row earns a streak freeze, and you can hold two. A frozen day carries the streak across.</p></div>
           </div>
           <div class="sky-note reveal" data-delay="2">
             <span class="note-icon gold" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.6 6.2 6.7.6-5.1 4.4 1.6 6.6L12 16.8l-5.8 3.5 1.6-6.6-5.1-4.4 6.7-.6z" fill="currentColor"/></svg></span>
-            <div><h3>Nothing taken back</h3><p>Your sky is worked out from the days you trained. A missed day never dims a star you already lit.</p></div>
+            <div><h3 data-i18n="sky.n3.title">Nothing taken back</h3><p data-i18n="sky.n3.body">Your sky is worked out from the days you trained. A missed day never dims a star you already lit.</p></div>
           </div>
         </div>
       </div>
@@ -425,57 +442,57 @@
     <section class="together paper" id="daily" data-theme="paper">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">Every day, and with friends</p>
-          <h2>One puzzle for everyone. <em>A duel for two.</em></h2>
+          <p class="eyebrow" data-i18n="daily.eyebrow">Every day, and with friends</p>
+          <h2 data-i18n="daily.title">One puzzle for everyone. <em>A duel for two.</em></h2>
         </header>
 
         <div class="duo">
           <article class="duo-card puzzle-card reveal">
             <div class="duo-copy">
-              <p class="chip chip-ice">Daily puzzle</p>
-              <h3>Slide the orb <em>home.</em></h3>
-              <p>An orb slides across a frozen pond until a rock or the edge stops it. Get it into the star in as few moves as you can. Everyone plays the same board on the same date, and everyone's first solve goes on one board, kept by Game Center.</p>
-              <ol class="week-ladder" aria-label="Fewest moves by weekday">
-                <li style="--n:3"><b>3</b><span>Mon</span></li>
-                <li style="--n:4"><b>4</b><span>Tue</span></li>
-                <li style="--n:5"><b>5</b><span>Wed</span></li>
-                <li style="--n:6"><b>6</b><span>Thu</span></li>
-                <li style="--n:7"><b>7</b><span>Fri</span></li>
-                <li style="--n:8"><b>8</b><span>Sat</span></li>
-                <li style="--n:9"><b>9</b><span>Sun</span></li>
+              <p class="chip chip-ice" data-i18n="puzzle.chip">Daily puzzle</p>
+              <h3 data-i18n="puzzle.title">Slide the orb <em>home.</em></h3>
+              <p data-i18n="puzzle.body">An orb slides across a frozen pond until a rock or the edge stops it. Get it into the star in as few moves as you can. Everyone plays the same board on the same date, and everyone's first solve goes on one board, kept by Game Center.</p>
+              <ol class="week-ladder" aria-label="Fewest moves by weekday" data-i18n-aria="puzzle.ladder">
+                <li style="--n:3"><b>3</b><span data-i18n="puzzle.mon">Mon</span></li>
+                <li style="--n:4"><b>4</b><span data-i18n="puzzle.tue">Tue</span></li>
+                <li style="--n:5"><b>5</b><span data-i18n="puzzle.wed">Wed</span></li>
+                <li style="--n:6"><b>6</b><span data-i18n="puzzle.thu">Thu</span></li>
+                <li style="--n:7"><b>7</b><span data-i18n="puzzle.fri">Fri</span></li>
+                <li style="--n:8"><b>8</b><span data-i18n="puzzle.sat">Sat</span></li>
+                <li style="--n:9"><b>9</b><span data-i18n="puzzle.sun">Sun</span></li>
               </ol>
-              <p class="ladder-cap">Fewest moves it takes, from Monday to Sunday.</p>
+              <p class="ladder-cap" data-i18n="puzzle.cap">Fewest moves it takes, from Monday to Sunday.</p>
             </div>
             <div class="glide" id="glide">
               <div class="glide-head">
-                <span>Try one</span>
-                <span class="glide-moves"><b id="glide-moves">0</b> moves · fewest <b>4</b></span>
+                <span data-i18n="puzzle.try">Try one</span>
+                <span class="glide-moves" id="glide-count"></span>
               </div>
-              <div class="glide-board" id="glide-board" tabindex="0" role="application" aria-label="A small sliding puzzle. Use the arrow keys or swipe to slide the orb."></div>
+              <div class="glide-board" id="glide-board" tabindex="0" role="application" aria-label="A small sliding puzzle. Use the arrow keys or swipe to slide the orb." data-i18n-aria="puzzle.board"></div>
               <div class="glide-pad">
-                <button type="button" data-dir="up" aria-label="Slide up">↑</button>
-                <button type="button" data-dir="left" aria-label="Slide left">←</button>
-                <button type="button" data-dir="down" aria-label="Slide down">↓</button>
-                <button type="button" data-dir="right" aria-label="Slide right">→</button>
-                <button type="button" class="glide-reset" data-reset aria-label="Start over">↺</button>
+                <button type="button" data-dir="up" aria-label="Slide up" data-i18n-aria="puzzle.up">↑</button>
+                <button type="button" data-dir="left" aria-label="Slide left" data-i18n-aria="puzzle.left">←</button>
+                <button type="button" data-dir="down" aria-label="Slide down" data-i18n-aria="puzzle.down">↓</button>
+                <button type="button" data-dir="right" aria-label="Slide right" data-i18n-aria="puzzle.right">→</button>
+                <button type="button" class="glide-reset" data-reset aria-label="Start over" data-i18n-aria="puzzle.reset">↺</button>
               </div>
-              <p class="glide-msg" id="glide-msg" aria-live="polite">Swipe, use the arrow keys, or tap the arrows.</p>
+              <p class="glide-msg" id="glide-msg" aria-live="polite"></p>
             </div>
           </article>
 
           <article class="duo-card duel-card reveal" data-delay="1">
             <div class="duo-copy">
-              <p class="chip chip-pink">Duels</p>
-              <h3>Same game. <em>Same rounds.</em></h3>
-              <p>Pick a game and play it first. Your friend gets the same rounds at the same difficulty, then you compare scores. No account and no server: the whole duel travels in a link you send.</p>
+              <p class="chip chip-pink" data-i18n="duel.chip">Duels</p>
+              <h3 data-i18n="duel.title">Same game. <em>Same rounds.</em></h3>
+              <p data-i18n="duel.body">Pick a game and play it first. Your friend gets the same rounds at the same difficulty, then you compare scores. No account and no server: the whole duel travels in a link you send.</p>
               <ul class="ticks">
-                <li>One try each, no starting over</li>
-                <li>Send it to a group, see every answer</li>
-                <li>A rematch deals the game afresh</li>
+                <li data-i18n="duel.t1">One try each, no starting over</li>
+                <li data-i18n="duel.t2">Send it to a group, see every answer</li>
+                <li data-i18n="duel.t3">A rematch deals the game afresh</li>
               </ul>
             </div>
             <figure class="phone duel-phone">
-              <div class="phone-frame"><div class="phone-screen"><img src="assets/screens/duel-sm.webp" srcset="assets/screens/duel-sm.webp 474w, assets/screens/duel.webp 948w" sizes="260px" width="948" height="2052" loading="lazy" alt="A friend's duel in Ink: their score of 1,240 to beat, at the same difficulty."></div><span class="phone-island" aria-hidden="true"></span></div>
+              <div class="phone-frame"><div class="phone-screen"><img class="shot" src="assets/screens/ka/duel-sm.webp" srcset="assets/screens/ka/duel-sm.webp 474w, assets/screens/ka/duel.webp 948w" sizes="300px" width="948" height="2052" loading="lazy" data-i18n-alt="shot.duel" alt="A duel from a friend in Ink: Nino's score of 1,240 to beat, at difficulty 4."></div><span class="phone-island" aria-hidden="true"></span></div>
             </figure>
           </article>
         </div>
@@ -486,45 +503,45 @@
     <section class="details paper" id="details" data-theme="paper">
       <div class="container">
         <header class="section-head reveal">
-          <p class="eyebrow">The details</p>
-          <h2>Small things, <em>done carefully.</em></h2>
+          <p class="eyebrow" data-i18n="details.eyebrow">The details</p>
+          <h2 data-i18n="details.title">Small things, <em>done carefully.</em></h2>
         </header>
         <ul class="feature-grid">
           <li class="feature reveal">
             <span class="f-icon" style="--c: var(--memory)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 8.5v7l5.5-3.5z" fill="currentColor"/></svg></span>
-            <h3>Practice rounds</h3><p>The first time you play a game, a practice round teaches it. It starts at the easiest difficulty and counts for nothing.</p>
+            <h3 data-i18n="f.practice.title">Practice rounds</h3><p data-i18n="f.practice.body">The first time you play a game, a practice round teaches it. It starts at the easiest difficulty and counts for nothing.</p>
           </li>
           <li class="feature reveal" data-delay="1">
             <span class="f-icon" style="--c: var(--attention)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="2" fill="currentColor"/><rect x="3.5" y="13.5" width="17" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>
-            <h3>Widgets</h3><p>Your streak, your neuron and today's three games, on the Home Screen and the Lock Screen.</p>
+            <h3 data-i18n="f.widgets.title">Widgets</h3><p data-i18n="f.widgets.body">Your streak, your neuron and today's three games, on the Home Screen and the Lock Screen.</p>
           </li>
           <li class="feature reveal" data-delay="2">
             <span class="f-icon" style="--c: var(--speed)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8.5" y="3" width="7" height="11" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-            <h3>Siri and Shortcuts</h3><p>Say “Start today's Neiro training”, or start it from Spotlight, the Shortcuts app or the Action button.</p>
+            <h3 data-i18n="f.siri.title">Siri and Shortcuts</h3><p data-i18n="f.siri.body">Say “Start today's Neiro training”, or start it from Spotlight, the Shortcuts app or the Action button.</p>
           </li>
           <li class="feature reveal">
             <span class="f-icon" style="--c: var(--words)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18.5a4.5 4.5 0 0 1-.6-9A6 6 0 0 1 18 9.6a4.5 4.5 0 0 1-.9 8.9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 15.5v-5M9.8 12.6L12 10.4l2.2 2.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3>iCloud backup</h3><p>Your progress is copied to your own iCloud, so a new phone picks up where you left off.</p>
+            <h3 data-i18n="f.icloud.title">iCloud backup</h3><p data-i18n="f.icloud.body">Your progress is copied to your own iCloud, so a new phone picks up where you left off.</p>
           </li>
           <li class="feature reveal" data-delay="1">
             <span class="f-icon" style="--c: var(--flexibility)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 21h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-            <h3>One gentle reminder</h3><p>A single reminder a day, at the time you choose, and it can name your streak or the day's challenge.</p>
+            <h3 data-i18n="f.reminder.title">One gentle reminder</h3><p data-i18n="f.reminder.body">A single reminder a day, at the time you choose, and it can name your streak or the day's challenge.</p>
           </li>
           <li class="feature reveal" data-delay="2">
             <span class="f-icon" style="--c: var(--gold)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 14.5L7 21l5-2.5 5 2.5-1.5-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
-            <h3>Twenty badges</h3><p>Milestones to collect along the way, from First spark to The whole sky.</p>
+            <h3 data-i18n="f.badges.title">Twenty badges</h3><p data-i18n="f.badges.body">Milestones to collect along the way, from First spark to The whole sky.</p>
           </li>
           <li class="feature reveal">
             <span class="f-icon" style="--c: var(--problem)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5a8.5 8.5 0 0 0 0 17z" fill="currentColor"/></svg></span>
-            <h3>Light and dark</h3><p>Ink on warm paper, or chalk on slate. The interface stays quiet so colour can belong to the seven skills.</p>
+            <h3 data-i18n="f.theme.title">Light and dark</h3><p data-i18n="f.theme.body">Ink on warm paper, or chalk on slate. The interface stays quiet so colour can belong to the seven skills.</p>
           </li>
           <li class="feature reveal" data-delay="1">
-            <span class="f-icon" style="--c: var(--math)"><svg viewBox="0 0 24 24" aria-hidden="true"><text x="3" y="11" font-size="9" font-weight="800" fill="currentColor" font-family="ui-rounded, Nunito, sans-serif">Aa</text><text x="11" y="21" font-size="10" font-weight="700" fill="currentColor" font-family="sans-serif">ქა</text></svg></span>
-            <h3>English and Georgian</h3><p>Switch inside the app, no restart. The word games are written for each language, not translated.</p>
+            <span class="f-icon" style="--c: var(--math)"><svg viewBox="0 0 24 24" aria-hidden="true"><text x="3" y="11" font-size="9" font-weight="800" fill="currentColor" font-family="ui-rounded, Nunito, sans-serif">Aa</text><text x="11" y="21" font-size="10" font-weight="700" fill="currentColor" font-family="'Noto Sans Georgian', sans-serif">ქა</text></svg></span>
+            <h3 data-i18n="f.lang.title">English and Georgian</h3><p data-i18n="f.lang.body">Switch inside the app, no restart. The word games are written for each language, not translated.</p>
           </li>
           <li class="feature reveal" data-delay="2">
             <span class="f-icon" style="--c: var(--ink-2)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8-7.5 9.5-4.3-1.5-7.5-4.9-7.5-9.5V6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.8 12l2.3 2.3 4.3-4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <h3>Private by design</h3><p>No account and no tracking. Your progress lives on your phone, and in your own iCloud if you keep the backup on.</p>
+            <h3 data-i18n="f.private.title">Private by design</h3><p data-i18n="f.private.body">No account and no tracking. Your progress lives on your phone, and in your own iCloud if you keep the backup on. <a class="inline-link" href="privacy.html">Privacy policy</a></p>
           </li>
         </ul>
       </div>
@@ -534,16 +551,16 @@
     <section class="promise paper" id="promise" data-theme="paper">
       <div class="container">
         <div class="promise-card reveal">
-          <p class="eyebrow">What to expect</p>
-          <p class="promise-quote">You will get better at these games. <em>We won't promise more than that.</em></p>
+          <p class="eyebrow" data-i18n="promise.eyebrow">What to expect</p>
+          <p class="promise-quote" data-i18n="promise.quote">You will get better at these games. <em>We won't promise more than that.</em></p>
           <div class="promise-cols">
             <div>
-              <h3>Honest about the science</h3>
-              <p>Research shows that gains in the skills you practise are real. Whether they carry over to everyday life is still debated, so Neiro doesn't promise to prevent, treat, or cure anything.</p>
+              <h3 data-i18n="promise.c1.title">Honest about the science</h3>
+              <p data-i18n="promise.c1.body">Research shows that gains in the skills you practise are real. Whether they carry over to everyday life is still debated, so Neiro doesn't promise to prevent, treat, or cure anything.</p>
             </div>
             <div>
-              <h3>The rest matters too</h3>
-              <p>Sleep, moving your body, time with people, and learning new things all matter for your brain. Think of Neiro as a few focused minutes a day alongside them.</p>
+              <h3 data-i18n="promise.c2.title">The rest matters too</h3>
+              <p data-i18n="promise.c2.body">Sleep, moving your body, time with people, and learning new things all matter for your brain. Think of Neiro as a few focused minutes a day alongside them.</p>
             </div>
           </div>
         </div>
@@ -554,42 +571,42 @@
     <section class="faq paper" id="faq" data-theme="paper">
       <div class="container faq-grid">
         <header class="section-head reveal">
-          <p class="eyebrow">Questions</p>
-          <h2>Good to <em>know.</em></h2>
-          <p class="lead small">Anything else? The app's own <em>How Neiro works</em> page, in Settings, explains every part of it.</p>
+          <p class="eyebrow" data-i18n="faq.eyebrow">Questions</p>
+          <h2 data-i18n="faq.title">Good to <em>know.</em></h2>
+          <p class="lead small" data-i18n="faq.lead">Anything else? The app's own <em>How Neiro works</em> page, in Settings, explains every part of it.</p>
         </header>
         <div class="faq-list">
           <details class="reveal">
-            <summary>How long does it take each day?</summary>
-            <p>About five minutes for your daily training of three short games. The daily puzzle and the challenge are there if you want a little more.</p>
+            <summary data-i18n="faq.q1">How long does it take each day?</summary>
+            <p data-i18n="faq.a1">About five minutes for your daily training of three short games. The daily puzzle and the challenge are there if you want a little more.</p>
           </details>
           <details class="reveal">
-            <summary>Which skills does Neiro train?</summary>
-            <p>Seven: memory, attention, speed, flexibility, problem solving, math, and words. There are four games for each, and your daily plan covers all seven over a week, leaning toward the ones you pick.</p>
+            <summary data-i18n="faq.q2">Which skills does Neiro train?</summary>
+            <p data-i18n="faq.a2">Seven: memory, attention, speed, flexibility, problem solving, math, and words. There are four games for each, and your daily plan covers all seven over a week, leaning toward the ones you pick.</p>
           </details>
           <details class="reveal">
-            <summary>Will it make me smarter?</summary>
-            <p>Neiro doesn't claim that. You will get better at the games, and research shows gains in the skills you practise are real. Whether those gains carry over to everyday life is still debated, so Neiro doesn't promise to prevent, treat, or cure anything.</p>
+            <summary data-i18n="faq.q3">Will it make me smarter?</summary>
+            <p data-i18n="faq.a3">Neiro doesn't claim that. You will get better at the games, and research shows gains in the skills you practise are real. Whether those gains carry over to everyday life is still debated, so Neiro doesn't promise to prevent, treat, or cure anything.</p>
           </details>
           <details class="reveal">
-            <summary>Are the games based on science?</summary>
-            <p>Each one is a short, playable version of a task researchers use to study the mind, such as the Corsi block test, the flanker task, the Stroop task, or the Tower of London. Every game's card names the task it comes from.</p>
+            <summary data-i18n="faq.q4">Are the games based on science?</summary>
+            <p data-i18n="faq.a4">Each one is a short, playable version of a task researchers use to study the mind, such as the Corsi block test, the flanker task, the Stroop task, or the Tower of London. Every game's card names the task it comes from.</p>
           </details>
           <details class="reveal">
-            <summary>What if a game is too hard, or too easy?</summary>
-            <p>It won't stay that way. Every game steps its difficulty up after a run of right answers and down after misses, so it settles where you're challenged but still winning about half the time. Each session starts a step below where you finished, as a warm up.</p>
+            <summary data-i18n="faq.q5">What if a game is too hard, or too easy?</summary>
+            <p data-i18n="faq.a5">It won't stay that way. Every game steps its difficulty up after a run of right answers and down after misses, so it settles where you're challenged but still winning about half the time. Each session starts a step below where you finished, as a warm up.</p>
           </details>
           <details class="reveal">
-            <summary>What happens if I miss a day?</summary>
-            <p>Your streak lasts until the end of the day after your last training, and a streak freeze can cover a missed day. Freezes come every seven days in a row, up to two. Your sky never loses a star: the next one simply waits.</p>
+            <summary data-i18n="faq.q6">What happens if I miss a day?</summary>
+            <p data-i18n="faq.a6">Your streak lasts until the end of the day after your last training, and a streak freeze can cover a missed day. Freezes come every seven days in a row, up to two. Your sky never loses a star: the next one simply waits.</p>
           </details>
           <details class="reveal">
-            <summary>Do I need an account?</summary>
-            <p>No. Neiro has no account and no tracking. Your progress is kept on your phone and backed up to your own iCloud. The daily puzzle's board uses Game Center, only if you choose to join it, and duels travel in the links you send.</p>
+            <summary data-i18n="faq.q7">Do I need an account?</summary>
+            <p data-i18n="faq.a7">No. Neiro has no account and no tracking. Your progress is kept on your phone and backed up to your own iCloud. The daily puzzle's board uses Game Center, only if you choose to join it, and duels travel in the links you send. More in the <a class="inline-link" href="privacy.html">privacy policy</a>.</p>
           </details>
           <details class="reveal">
-            <summary>What do I need to play?</summary>
-            <p>An iPhone with iOS 17 or later. Neiro is in English and Georgian, in light and dark, and you can switch the language inside the app.</p>
+            <summary data-i18n="faq.q8">What do I need to play?</summary>
+            <p data-i18n="faq.a8">An iPhone with iOS 17 or later. Neiro is in English and Georgian, in light and dark, and you can switch the language inside the app.</p>
           </details>
         </div>
       </div>
@@ -599,16 +616,16 @@
     <section class="final night" id="download" data-theme="night">
       <canvas class="final-neuron" id="final-neuron" aria-hidden="true"></canvas>
       <div class="container final-inner">
-        <img class="final-icon reveal" src="assets/img/icon-256.webp" width="112" height="112" alt="The Neiro app icon: a neuron with seven coloured branches on a night sky.">
-        <h2 class="display reveal">Your first training <em>is ready.</em></h2>
-        <p class="lead reveal">Three short games, about five minutes. Each starts with a practice round, so you learn as you play.</p>
+        <img class="final-icon reveal" src="assets/img/icon-256.webp" width="112" height="112" data-i18n-alt="final.icon" alt="The Neiro app icon: a neuron with seven coloured branches on a night sky.">
+        <h2 class="display reveal" data-i18n="final.title">Your first training <em>is ready.</em></h2>
+        <p class="lead reveal" data-i18n="final.lead">Three short games, about five minutes. Each starts with a practice round, so you learn as you play.</p>
         <div class="cta-row center reveal">
-          <a class="appstore" data-appstore href="https://apps.apple.com/" aria-label="Download Neiro on the App Store">
+          <a class="appstore" data-appstore href="https://apps.apple.com/" aria-label="Download Neiro on the App Store" data-i18n-aria="appstore.aria">
             <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#apple"/></svg>
             <span><small>Download on the</small><strong>App Store</strong></span>
           </a>
         </div>
-        <p class="final-meta reveal">For iPhone · iOS 17 or later · English and ქართული</p>
+        <p class="final-meta reveal" data-i18n="final.meta">For iPhone · iOS 17 or later · English and ქართული</p>
       </div>
     </section>
   </main>
@@ -619,13 +636,18 @@
         <img src="assets/img/icon-64.png" width="28" height="28" alt="">
         <span>Neiro</span>
       </a>
-      <nav class="footer-links" aria-label="Footer">
-        <a href="#games">Games</a>
-        <a href="#how">How it works</a>
-        <a href="#promise">What to expect</a>
-        <a href="#faq">FAQ</a>
+      <nav class="footer-links" aria-label="Footer" data-i18n-aria="footer.nav">
+        <a href="#games" data-i18n="footer.games">Games</a>
+        <a href="#how" data-i18n="footer.how">How it works</a>
+        <a href="#promise" data-i18n="footer.promise">What to expect</a>
+        <a href="#faq" data-i18n="footer.faq">FAQ</a>
+        <a href="privacy.html" data-keep-lang data-i18n="footer.privacy">Privacy</a>
+        <span class="lang-switch small" role="group" aria-label="Language" data-i18n-aria="nav.lang">
+          <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="ka" lang="ka" aria-pressed="false">ქა</button>
+        </span>
       </nav>
-      <p class="footer-small">Neiro is a brain training game. It isn't a medical product and doesn't diagnose, treat, or prevent any condition.<br>Apple, the Apple logo, iPhone and App Store are trademarks of Apple Inc. © 2026 Factory Labs.</p>
+      <p class="footer-small" data-i18n="footer.small">Neiro is a brain training game. It isn't a medical product and doesn't diagnose, treat, or prevent any condition.<br>Apple, the Apple logo, iPhone and App Store are trademarks of Apple Inc. © 2026 Factory Labs.</p>
     </div>
   </footer>
 

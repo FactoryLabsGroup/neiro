@@ -966,7 +966,8 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border: 0; bo
 /* Responsive ------------------------------------------------------------------------- */
 
 @media (max-width: 1100px) {
-  .wall { grid-template-columns: 1fr; gap: 18px; }
+  .wall { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .wall-col { min-width: 0; }
   .wall-col { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 16px; align-items: start; }
   .wall-head { min-height: 0; padding-top: 10px; }
   .wall-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -976,7 +977,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border: 0; bo
 
 @media (max-width: 960px) {
   .nav-links { display: none; }
-  .nav-cta { margin-left: auto; }
+  .nav .lang-switch { margin-left: auto; }
   .hero { min-height: 0; }
   .hero-grid { grid-template-columns: 1fr; gap: 12px; }
   .hero-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
@@ -1051,4 +1052,142 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border: 0; bo
   .hero-facts { gap: 18px; }
   .craft-phones .phone { --w: 190px; }
   .ink-swatches { gap: 8px; }
+}
+
+
+/* On wide screens every skill's header shares one height, so the tiles line up across the
+   wall in any language. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 1101px) {
+    .wall { grid-template-rows: auto auto; row-gap: 12px; }
+    .wall-col { display: grid; grid-row: span 2; grid-template-rows: subgrid; gap: 12px; }
+    .wall-head { min-height: 0; }
+  }
+}
+
+/* Languages ---------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Noto Sans Georgian";
+  src: url("../fonts/noto-sans-georgian.woff2") format("woff2");
+  font-weight: 400 800;
+  font-display: swap;
+  unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBA, U+1CBD-1CBF, U+205A, U+2D00-2D2F, U+2E31;
+}
+@font-face {
+  font-family: "Noto Serif Georgian";
+  src: url("../fonts/noto-serif-georgian.woff2") format("woff2");
+  font-weight: 400 500;
+  font-display: swap;
+  unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBA, U+1CBD-1CBF, U+205A, U+2D00-2D2F, U+2E31;
+}
+
+/* Georgian waits for its words before the page shows, so English never flashes. */
+.lang-pending body { visibility: hidden; }
+
+.lang-switch {
+  display: inline-flex; align-items: center; gap: 2px; flex: none;
+  padding: 3px; border-radius: 999px;
+  background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1);
+  transition: background-color .3s, box-shadow .3s;
+}
+.lang-switch button {
+  min-width: 38px; height: 30px; padding: 0 10px; border: 0; border-radius: 999px; cursor: pointer;
+  background: transparent; color: inherit; opacity: .72;
+  font: 600 13px/1 var(--font-text);
+  transition: background-color .25s var(--ease), color .25s, opacity .2s;
+}
+.lang-switch button:hover { opacity: 1; }
+.lang-switch button[lang="ka"] { font-family: "Noto Sans Georgian", var(--font-text); font-size: 13.5px; }
+.lang-switch button[aria-pressed="true"] { background: var(--chalk); color: var(--ink); opacity: 1; }
+.nav .lang-switch { margin-left: 4px; }
+.nav[data-on="paper"].scrolled .lang-switch { background: rgba(20, 21, 26, .05); box-shadow: inset 0 0 0 1px rgba(20, 21, 26, .1); }
+.nav[data-on="paper"].scrolled .lang-switch button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.lang-switch.small button { height: 26px; min-width: 34px; font-size: 12px; }
+.footer-links { align-items: center; }
+
+.inline-link { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+.inline-link:hover { text-decoration-color: currentColor; }
+
+/* Georgian, set the way the app sets it: the system's Georgian face where there is one,
+   always at zero tracking, never in capitals, and no slanted accent (Georgian has no italic). */
+html[lang="ka"] {
+  --font-display: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, "Nunito", "Noto Sans Georgian", sans-serif;
+  --font-text: -apple-system, BlinkMacSystemFont, "Inter", "Noto Sans Georgian", "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Noto Serif Georgian", "Instrument Serif", Georgia, serif;
+}
+html[lang="ka"] body *:not([lang="en"]) { letter-spacing: 0 !important; }
+html[lang="ka"] .eyebrow, html[lang="ka"] .research-title, html[lang="ka"] .gd-skill, html[lang="ka"] .hud small { text-transform: none; }
+html[lang="ka"] .eyebrow { font-size: 14px; }
+html[lang="ka"] .display em, html[lang="ka"] h2 em, html[lang="ka"] .h3 em, html[lang="ka"] h3 em, html[lang="ka"] .promise-quote em, html[lang="ka"] .lead em {
+  font-style: normal; font-weight: 500; font-size: 1em; line-height: inherit;
+}
+html[lang="ka"] .display { font-size: clamp(38px, 5vw, 72px); line-height: 1.12; }
+html[lang="ka"] h2 { font-size: clamp(30px, 3.7vw, 52px); line-height: 1.16; }
+html[lang="ka"] .h3 { font-size: clamp(25px, 2.5vw, 34px); line-height: 1.2; }
+html[lang="ka"] .promise-quote { font-size: clamp(28px, 3.6vw, 48px); line-height: 1.2; }
+html[lang="ka"] .story-step h3, html[lang="ka"] .duo-card h3 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.2; }
+html[lang="ka"] .gd-body h3 { font-size: 34px; line-height: 1.15; }
+html[lang="ka"] .lead { font-size: clamp(17px, 1.4vw, 19.5px); line-height: 1.65; }
+html[lang="ka"] .hero h1 { max-width: 11em; }
+html[lang="ka"] .hero-facts span, html[lang="ka"] .tile-meta { line-height: 1.35; }
+html[lang="ka"] .wall-head b { font-size: 15px; }
+html[lang="ka"] .wall-head span { font-size: 12px; }
+/* Georgian names are long single words, so they scale with the tile instead of breaking. */
+.tile { container-type: inline-size; }
+html[lang="ka"] .tile-name { font-size: 12px; font-size: clamp(10.5px, 7.6cqi, 13px); white-space: nowrap; overflow-wrap: normal; }
+html[lang="ka"] .tile-body { padding-inline: 10px; }
+.tile, .wall-row { min-width: 0; }
+.tile-name { overflow-wrap: anywhere; }
+html[lang="ka"] .pill { font-size: 13px; text-align: left; }
+html[lang="ka"] .craft-list li { grid-template-columns: 200px 1fr; }
+html[lang="ka"] .ink-word { font-size: clamp(36px, 4.2vw, 52px); }
+html[lang="ka"] .btn-primary { font-size: 16px; }
+html[lang="ka"] .faq-list summary { font-size: 17.5px; line-height: 1.4; }
+@media (max-width: 1100px) {
+  html[lang="ka"] .craft-list li { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .nav-cta { width: 38px; padding: 0; justify-content: center; }
+  .nav-cta span { display: none; }
+  .nav-cta svg { margin: -2px 0 0; }
+}
+
+/* Privacy policy ----------------------------------------------------------------------- */
+
+.legal-hero { padding-top: clamp(120px, 14vw, 170px); padding-bottom: clamp(56px, 7vw, 90px); overflow: hidden; }
+.legal-hero .hero-sky::before { opacity: .35; }
+.legal-hero .container { position: relative; max-width: 880px; }
+.legal-hero h1 { font-size: clamp(40px, 5.6vw, 76px); line-height: 1.02; letter-spacing: -.04em; }
+html[lang="ka"] .legal-hero h1 { font-size: clamp(32px, 4.4vw, 58px); line-height: 1.15; }
+.legal-hero .lead { margin-top: 20px; }
+.legal-date { margin-top: 18px; color: var(--text-3); font-size: 14.5px; }
+.legal-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 40px; }
+.legal-points li { padding: 18px 18px 20px; border-radius: 20px; background: var(--slate); box-shadow: inset 0 0 0 1px var(--line); }
+.legal-points b { display: block; font-family: var(--font-display); font-weight: 800; font-size: 17px; }
+.legal-points span { display: block; margin-top: 4px; color: var(--text-2); font-size: 14.5px; line-height: 1.45; }
+.legal-points li::before { content: ""; display: block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 14px var(--c); margin-bottom: 14px; }
+.legal { padding-top: clamp(56px, 7vw, 96px); }
+.legal .container { max-width: 760px; }
+.legal article > section { padding: 30px 0; border-top: 1px solid var(--line); }
+.legal article > section:first-child { border-top: 0; padding-top: 0; }
+.legal h2 { font-size: clamp(24px, 2.6vw, 30px); letter-spacing: -.025em; line-height: 1.2; }
+html[lang="ka"] .legal h2 { font-size: clamp(21px, 2.2vw, 26px); line-height: 1.3; }
+.legal p, .legal li { color: var(--text-2); font-size: 17px; line-height: 1.65; }
+.legal p { margin-top: 12px; }
+.legal ul { margin-top: 12px; display: grid; gap: 8px; }
+.legal ul li { position: relative; padding-left: 22px; }
+.legal ul li::before { content: ""; position: absolute; left: 4px; top: .7em; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
+.legal strong { color: var(--text); font-weight: 600; }
+.legal a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.legal-contact { margin-top: 18px; display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 14px; background: var(--card); box-shadow: 0 0 0 1px var(--line); font-weight: 600; color: var(--text) !important; text-decoration: none !important; }
+.nav-back { margin-left: auto; font-size: 14.5px; font-weight: 500; padding: 8px 12px; border-radius: 999px; opacity: .8; }
+.nav-back:hover { opacity: 1; background: rgba(127, 127, 127, .12); }
+@media (max-width: 960px) {
+  .nav .nav-back + .lang-switch { margin-left: 4px; }
+}
+@media (max-width: 700px) {
+  .legal-points { grid-template-columns: 1fr; }
+  .nav-back { display: none; }
+  .nav .nav-back + .lang-switch { margin-left: auto; }
 }
