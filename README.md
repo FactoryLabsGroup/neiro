@@ -16,7 +16,7 @@ Then visit http://localhost:8000.
 
 ## Before launch
 
-- **App Store link.** Set `APP_STORE_URL` in `assets/js/config.js`. Every download button on both pages reads it.
+- **App Store link.** `APP_STORE_URL` in `assets/js/config.js` points to the live listing (id6838035042); every download button reads it.
 - **English screenshots.** The app repository only has Georgian App Store screenshots, so for now the English page shows those too, and says so under the day section. To make the English set, run this on a Mac with Xcode, pointing at the app repository:
 
   ```bash
